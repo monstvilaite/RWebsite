@@ -1,0 +1,582 @@
+---
+title: "Predict cryptos with ARMA GARCH and r-vine"
+author: "Monika Monstvilaite"
+date: 2017-07-23T21:13:14-05:00
+categories: ["R"]
+tags: ["R Markdown", "plot", "regression"]
+---
+
+```{r setup, include=FALSE}
+
+#install.packages("dplyr")
+library(ggplot2)
+library(plyr)
+library(VineCopula)
+#library(plot3D)
+library(GGally)
+library(PerformanceAnalytics)
+library(MASS)
+library(rugarch)
+library(reshape2)
+library(fGarch)
+library(rmgarch)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(reshape)
+library(GEVStableGarch)
+library(scatterplot3d)
+library(RColorBrewer)
+Sys.setlocale("LC_ALL","English")
+library(httr)
+library(jsonlite)
+library(lubridate)
+# library(Rbitcoin)
+# library(rbitcoinchartsapi)
+library(data.table)
+library(XML)
+library(Quandl)
+```
+
+```{r, echo=FALSE, message=F, warning=F}
+# # Full Coin List, 2k coins
+#RateLimit:  6000/hour, 300/min, 15/s.
+# Get the price of any cryptocurrency in any other currency that you need at a given timestamp.The price comes from the daily info - so it would be the price at the end of the day GMT based on the requested TS.If the crypto does not trade directly into the toSymbol requested, BTC will be used for conversion.
+# response = fromJSON('https://www.cryptocompare.com/api/data/coinlist')
+# df = data.table::rbindlist(response$Data, fill=TRUE)
+ 
+# # Can find available coins here
+# cc <- fromJSON("https://min-api.cryptocompare.com/")
+# cc$AvailableCalls$Price$PriceHistorical$Info
+ 
+# # See examples on https://www.cryptocompare.com/api/#-api-data-
+# # Returns all the coins that CryptoCompare has added to the website. This is not the full list of coins we have in the system, it is just the list of coins we have done some research on
+# data<- fromJSON("https://min-api.cryptocompare.com/data/all/exchanges")
+# data$Poloniex$DASH
+```
+
+
+```{r Data Set, echo=FALSE, warning=F, message=F, fig.height=3.5, include=F}
+#rm(list = ls(all = TRUE))
+JBCH <- fromJSON("https://min-api.cryptocompare.com/data/histoday?fsym=BCH&tsym=USD&limit=200&e=CCCAGG")
+JBTC <- fromJSON("https://min-api.cryptocompare.com/data/histoday?fsym=BTC&tsym=USD&limit=200&e=Coinbase")
+JDCR <- fromJSON("https://min-api.cryptocompare.com/data/histoday?fsym=DCR&tsym=USD&limit=200&e=CCCAGG")
+JETC <- fromJSON("https://min-api.cryptocompare.com/data/histoday?fsym=ETC&tsym=USD&limit=200&e=CCCAGG")
+JETH <- fromJSON("https://min-api.cryptocompare.com/data/histoday?fsym=ETH&tsym=USD&limit=200&e=Coinbase")
+JFCT <- fromJSON("https://min-api.cryptocompare.com/data/histoday?fsym=FCT&tsym=USD&limit=200&e=CCCAGG")
+JFTC <- fromJSON("https://min-api.cryptocompare.com/data/histoday?fsym=FTC&tsym=USD&limit=200&e=CCCAGG")
+JGNO <- fromJSON("https://min-api.cryptocompare.com/data/histoday?fsym=GNO&tsym=USD&limit=200&e=CCCAGG")
+#JGNT <- fromJSON("https://min-api.cryptocompare.com/data/histoday?fsym=GNT&tsym=USD&limit=200&e=CCCAGG")
+#JIOT <- fromJSON("https://min-api.cryptocompare.com/data/histoday?fsym=IOTA&tsym=USD&limit=200&e=CCCAGG")
+JLTC <- fromJSON("https://min-api.cryptocompare.com/data/histoday?fsym=LTC&tsym=USD&limit=200&e=Coinbase")
+JNEO <- fromJSON("https://min-api.cryptocompare.com/data/histoday?fsym=NEO&tsym=USD&limit=200&e=CCCAGG")
+JSTR <- fromJSON("https://min-api.cryptocompare.com/data/histoday?fsym=STRAT&tsym=USD&limit=200&e=CCCAGG")
+JVTC <- fromJSON("https://min-api.cryptocompare.com/data/histoday?fsym=VTC&tsym=USD&limit=200&e=CCCAGG")
+JWTC <- fromJSON("https://min-api.cryptocompare.com/data/histoday?fsym=WTC&tsym=USD&limit=200&e=CCCAGG")
+JWNG <- fromJSON("https://min-api.cryptocompare.com/data/histoday?fsym=WINGS&tsym=USD&limit=200&e=CCCAGG")
+JXMR <- fromJSON("https://min-api.cryptocompare.com/data/histoday?fsym=XMR&tsym=USD&limit=200&e=CCCAGG")
+JXRP <- fromJSON("https://min-api.cryptocompare.com/data/histoday?fsym=XRP&tsym=USD&limit=200&e=CCCAGG")
+JZEC <- fromJSON("https://min-api.cryptocompare.com/data/histoday?fsym=ZEC&tsym=USD&limit=200&e=CCCAGG")
+#NEM <- fromJSON("https://min-api.cryptocompare.com/data/histoday?fsym=NEM&tsym=USD&limit=200&e=CCCAGG")
+```
+
+```{r, echo=FALSE, message=F, warning=F, figheight=3}
+#mydata = Quandl("BITFINEX/BCHUSD", api_key="1Bs14phEA2ZsCWXz-5EU")
+
+data <- merge(JBCH$Data[c("time", "close")], JBTC$Data[c("time", "close")], by='time', type='left')
+data <- merge(data, JDCR$Data[c("time", "close")], by='time', type='left')
+data <- merge(data, JETC$Data[c("time", "close")], by='time', type='left')
+data <- merge(data, JETH$Data[c("time", "close")], by='time', type='left')
+data <- merge(data, JFCT$Data[c("time", "close")], by='time', type='left')
+data <- merge(data, JFTC$Data[c("time", "close")], by='time', type='left')
+data <- merge(data, JGNO$Data[c("time", "close")], by='time', type='left')
+#data <- merge(data, JGNT$Data[c("time", "close")], by='time', type='left')
+#data <- merge(data, IOT$Data[c("time", "close")], by='time', type='left')
+data <- merge(data, JLTC$Data[c("time", "close")], by='time', type='left')
+data <- merge(data, JNEO$Data[c("time", "close")], by='time', type='left')
+data <- merge(data, JSTR$Data[c("time", "close")], by='time', type='left')
+data <- merge(data, JVTC$Data[c("time", "close")], by='time', type='left')
+data <- merge(data, JWTC$Data[c("time", "close")], by='time', type='left')
+data <- merge(data, JWNG$Data[c("time", "close")], by='time', type='left')
+data <- merge(data, JXMR$Data[c("time", "close")], by='time', type='left')
+data <- merge(data, JXRP$Data[c("time", "close")], by='time', type='left')
+data <- merge(data, JZEC$Data[c("time", "close")], by='time', type='left')
+
+colnames(data) <- c("Date", "BCH", "BTC", "DCR", "ETC", "ETH", "FCT", "FTC", "GNO",
+                    "LTC", "NEO", "STR", "VTC", "WTC", "WNG", "XMR", "XRP", "ZEC")
+
+#BCH <- do.call(rbind.data.frame, BCH$Data)
+#colnames(BTC) <- c("Time", "Close", "High", "Low", "Open", "Volumefrom", "Volumeto")
+data$Date <- as.POSIXct(data$Date, origin="1970-01-01")
+n<- nrow(data)
+
+# Turns 0 values to NA values and removes columns with NA values
+data[data == 0] <- NA
+data<- data[ , apply(data, 2, function(x) !any(is.na(x)))]
+```
+
+# Analysis based on data available at `r data$Date[n]`
+
+Note: data is random, anytrading strategies that 
+
+# Marginal Log-Returns
+
+Here is descriptive analysis of historical returns. See mean, median, min and max value for each cryptocurrency from `r data$Date[1]` to `r data$Date[n]`:
+
+```{r, echo=FALSE, warning=F, message=F, fig.height=3.5}
+# Calculating log return
+returns <- data[-1, ]
+for (i in 2:ncol(data)){
+  returns[,i]<- diff(log(data[,i]), lag=1)
+}
+```
+
+The historical means of the data are the following:
+
+```{r, echo=FALSE, warning=F, message=F}
+round(sapply(returns[,-1], mean), 3)
+```
+
+The historical variance of data is the following:
+
+```{r, echo=FALSE, warning=F, message=F}
+round(sqrt(sapply(returns[,-1], var)), 3)
+```
+
+
+```{r LogReturn plot, echo=FALSE, warning=F, message=F}
+## Testing if there are arch effects in the data
+# library(FinTS)
+# AutocorTest(returns$BCH,lag=1)
+# ArchTest(returns$XRP,lag=1)
+```
+
+
+```{r, echo=FALSE, warning=F, message=F, fig.height=4, fig.width=3.5}
+Monika.plots <- function(data=NULL, Title="Edit Title", limits=c(-0.45, 0.45)){
+  ggplot(data = data, aes(x=value, fill=variable)) +
+  geom_density(aes(colour=variable), cex = 1, adjust=2, alpha=0.01) +
+  theme_bw() + ggtitle(Title) + labs(x=NULL, y=NULL) + xlim(limits) + 
+  theme(panel.border=element_blank(), legend.position = "bottom", legend.title = element_blank()) +
+  scale_color_brewer(type = "seq", palette = "Set1", direction = 1)
+}
+  
+n <- as.integer(ncol(returns)/2)
+
+meltdf1 <- melt(returns[,1:n], id="Date")
+meltdf2 <- melt(returns[, c(1,(n+1):ncol(returns))], id="Date")
+
+par(mfrow=c(1,2))
+Monika.plots(meltdf1, Title = "Historical returns, part one")
+Monika.plots(meltdf2, Title = "Historical returns, part two")
+```
+
+# ARMA-GARCH models fitted
+
+```{r Fitting ARMA-GARCH, echo=FALSE, warning=F, message=F}
+armagarch <- function(i, j, k, l, data){
+  spec <- ugarchspec(variance.model = list(garchOrder = c(k, l)), 
+                   mean.model     = list(armaOrder = c(i, j), include.mean=F),
+                   distribution.model = "std")
+  ugarchfit(spec = spec, data = data)
+}
+
+select <- function(x){
+            gsSelect(x, order.max = c(2, 2, 1, 2),
+                     selection.criteria = c("BIC"), is.aparch = FALSE,
+                     cond.dist = "std", include.mean = F)
+}
+
+BCH <- armagarch(0, 0, 1, 1, data = returns[,"BCH"])
+BTC <- armagarch(0, 0, 1, 1, data = returns[,"BTC"])
+DCR <- armagarch(0, 0, 1, 1, data = returns[,"DCR"])
+ETC <- armagarch(0, 1, 1, 1, data = returns[,"ETC"])
+ETH <- armagarch(0, 0, 1, 1, data = returns[,"ETH"])
+FCT <- armagarch(0, 1, 1, 1, data = returns[,"FCT"])
+FTC <- armagarch(1, 1, 1, 1, data = returns[,"FTC"])
+GNO <- armagarch(1, 1, 1, 1, data = returns[,"GNO"])
+#GNT <- armagarch(1, 2, 1, 1, data = returns[,"GNT"])
+#IOT <- ugarchfit(spec = spec, data = returns[,"IOT"])
+LTC <- armagarch(0, 1, 1, 1, data = returns[,"LTC"])
+NEO <- armagarch(0, 1, 1, 1, data = returns[,"NEO"])
+STR <- armagarch(0, 1, 1, 1, data = returns[,"STR"])
+VTC <- armagarch(0, 0, 1, 1, data = returns[,"VTC"])
+#WTC <- ugarchfit(spec = spec, data = returns[,"WTC"])
+WNG <- armagarch(0, 1, 1, 1, data = returns[,"WNG"])
+XMR <- armagarch(0, 1, 1, 1, data = returns[,"XMR"])
+XRP <- armagarch(0, 1, 1, 1, data = returns[,"XRP"])
+ZEC <- armagarch(0, 1, 1, 1, data = returns[,"ZEC"])
+```
+
+## Standardized error distribution
+
+Should be mean 0, variance 1, no bumps, but cryptos are weird
+
+```{r LogReturn plot 2, echo=FALSE, warning=F, message=F, fig.height=4, fig.width=3.5}
+std_error <- data.frame(Date=returns$Date, BTC=BTC@fit$z, BCH=BCH@fit$z, DCR=DCR@fit$z, 
+                        ETC=ETC@fit$z, ETH=ETH@fit$z, 
+                     FCT=FCT@fit$z, FTC=FTC@fit$z, GNO=GNO@fit$z, LTC=LTC@fit$z, STR=STR@fit$z,
+                     VTC=VTC@fit$z, WNG=WNG@fit$z, XMR=XMR@fit$z, XRP=XRP@fit$z, ZEC=ZEC@fit$z)
+
+#n <- as.integer(ncol(std_error)/2)
+
+#par(mfrow=c(1,2))
+#meltdf <- melt(std_error[ ,1:n], id="Date")
+#Monika.plots(meltdf, Title = "Noise distribution, part one", c(-5,5))
+#meltdf <- melt(std_error[, c(1,(n+1):ncol(returns))], id="Date")
+#Monika.plots(meltdf, Title = "Noise distribution, part two", c(-5,5))
+```
+
+# Transforming to uniform distribution
+
+Nescessary in order to investigate dependence structure
+
+```{r, echo=FALSE, warning=F, message=F}
+# #BCH.obs <- psstd(BCH@fit$z, nu= BCH@fit$coef["shape"], xi= BCH@fit$coef["skew"])
+
+BTC.obs <- pstd(BTC@fit$z, nu= BTC@fit$coef["shape"])
+DCR.obs <- pstd(DCR@fit$z, nu= DCR@fit$coef["shape"])
+ETC.obs <- pstd(ETC@fit$z, nu= ETC@fit$coef["shape"])
+ETH.obs <- pstd(ETH@fit$z, nu= ETH@fit$coef["shape"])
+FCT.obs <- pstd(FCT@fit$z, nu= FCT@fit$coef["shape"])
+FTC.obs <- pstd(FTC@fit$z, nu= FTC@fit$coef["shape"])
+GNO.obs <- pstd(GNO@fit$z, nu= GNO@fit$coef["shape"])
+#GNT.obs <- pstd(GNT@fit$z, nu= GNT@fit$coef["shape"])
+LTC.obs <- pstd(LTC@fit$z, nu= LTC@fit$coef["shape"])
+STR.obs <- pstd(STR@fit$z, nu= STR@fit$coef["shape"])
+VTC.obs <- pstd(VTC@fit$z, nu= VTC@fit$coef["shape"])
+WNG.obs <- pstd(WNG@fit$z, nu= WNG@fit$coef["shape"])
+XMR.obs <- pstd(XMR@fit$z, nu= XMR@fit$coef["shape"])
+XRP.obs <- pstd(XRP@fit$z, nu= XRP@fit$coef["shape"])
+ZEC.obs <- pstd(ZEC@fit$z, nu= ZEC@fit$coef["shape"])
+```
+
+
+# R-Vine copula
+
+Instead of using correlation between variables, we will use r-vine copula. It is done so because correlation is not able to capture the nuances of assets that are correlated in for e.g. left tail of a distribution, but not a right tail. 
+Intuition: cryptocurrencies might all crash at the same time, but when the market is doing well, they are uncorrelated.
+
+Regular vine copula is a method to construct one solution for a simplified pair copula construction such that it would be as close as possible to real multivariate distribution that we aim to model. This way we are also able capture the dependency structure between the variables in an efficient way. 
+
+Kendall?s $\tau$ is given by: $\tau = P((X_1-X_2)(Y_1-Y_2) >0)-P((X_1-X_2)(Y_1-Y_2) < 0)$
+
+where $(X_1, Y_1) \sim F$ and $(X_2, Y_2) \sim F$ are independent pairs of random variables. Kendall's $\tau$ is a rank correlation. It does not depend directly on the values and thus is invariant under strictly monotone transformations (cite(Gruber)). On the contrary, linear correlation parameter Pearson's $\rho$ is it not invariant under non-linear strictly increasing transformations, meaning that value of Pearson's $\rho$ depends on marginal distributions. That is why Kendall?s $\tau$ is a more reliable measure in our case.
+
+We plot here the dependence structure. Tree graph below shows the strongest dependencies between cryptocurrencies based on Kendall?s $\tau$.
+
+```{r, echo=FALSE, warning=F, message=F}
+returns.vine <- data.frame(BTC.obs, DCR.obs, ETC.obs, ETH.obs, FCT.obs, FTC.obs, GNO.obs, 
+                           LTC.obs, STR.obs, VTC.obs, WNG.obs, XMR.obs, XRP.obs, ZEC.obs)
+colnames(returns.vine) <- c("BTC", "DCR", "ETC", "ETH", "FCT", "FTC", "GNO", 
+                            "LTC", "STR", "VTC", "WNG", "XMR", "XRP", "ZEC")
+#Selects vine tree structure, fits copula and estimates copula parameters
+Matrix.full <- RVineStructureSelect(returns.vine, familyset = NA,
+                                type = 0, selectioncrit = "AIC", 
+                                indeptest = T, level = 0.1)
+
+plot(Matrix.full, type=1, tree = 1, edge.labels = "tau")
+```
+
+Please note below how variables are encoded:
+
+| 1  | 2  | 3  | 4  | 5  | 6  | 7   | 8   | 9   | 10  | 11  | 12  | 13  | 14  | 15  |
+|----|----|----|----|----|----|-----|-----|-----|-----|-----|-----|-----|-----|-----|
+| BTC| DCR| ETC| ETH| FCT| FTC| GNO | GNT | LTC | STR |VTC  | WNG | XMR | XRP | ZEC |
+
+```{r, echo=FALSE, warning=F, message=F, fig.height=1.1, fig.width=10}
+#contour(Matrix.full)
+contour(Matrix.full, tree=c(1))
+```
+
+Copulas can help to perceive and visualize the nuances of dependence which is useful when describing the dependence of extreme events. In a figure above we can see that dependence structure can look very different and is not nescessarily symmetrical. Since copulas reveal dependence on a quantile scale, it is especially useful in the context of quantile based risk measures.
+
+# Prediction one day ahead
+
+```{r, echo=FALSE}
+nsim  <- 100000
+simulation1 <- RVineSim(nsim, Matrix.full)
+```
+
+## Backtransforming
+
+```{r, echo=F}
+# # These are standardized residuals
+# #BCH.sim <- qsstd(simulation1[,1], nu= BCH@fit$coef["shape"], xi= BCH@fit$coef["skew"])
+
+backtransform <- function(uGARCHfit, simulation, log_return){
+  
+  coef      <- uGARCHfit@fit$coef
+  residuals <- uGARCHfit@fit$residuals
+  sigma     <- uGARCHfit@fit$sigma
+  t         <- length(uGARCHfit@fit$residuals)
+  
+  if (is.na(coef["skew"])==FALSE){
+    standard_error <- qsstd(simulation, nu= coef["shape"], xi= coef["skew"])
+  } else {
+      standard_error <- qstd(simulation, nu= coef["shape"])
+      }
+
+  if (is.na(coef["omega"])==TRUE){coef["omega"] <- 0}
+  if (is.na(coef["alpha1"])==TRUE){coef["alpha1"] <- 0}
+  if (is.na(coef["alpha2"])==TRUE){coef["alpha2"] <- 0}
+  if (is.na(coef["beta1"])==TRUE){coef["beta1"] <- 0}
+  if (is.na(coef["beta2"])==TRUE){coef["beta2"] <- 0}
+  if (is.na(coef["mu"])==TRUE){coef["mu"] <- 0}
+  if (is.na(coef["ar1"])==TRUE){coef["ar1"] <- 0}
+  if (is.na(coef["ar2"])==TRUE){coef["ar2"] <- 0}
+  if (is.na(coef["ma1"])==TRUE){coef["ma1"] <- 0}
+  if (is.na(coef["ma2"])==TRUE){coef["ma2"] <- 0}
+  
+  VAR <- as.numeric(coef["omega"] + 
+                    coef["alpha1"]*residuals[t]^2 + coef["alpha2"]*residuals[t-1]^2 +
+                    coef["beta1"]*sigma[t]^2 + coef["beta2"]*sigma[t-1]^2)
+  
+  error <- standard_error*sqrt(VAR)
+
+  return_prediction <- coef["mu"] + error + 
+                       coef["ar1"]*log_return[t] + coef["ar2"]*log_return[t-1] +
+                       coef["ma1"]*residuals[t]  + coef["ma2"]*residuals[t-1]
+  return(return_prediction)
+}
+
+BTC.ret.pred <- backtransform(BTC, simulation = simulation1[ ,"BTC"], log_return = returns$BTC)
+DCR.ret.pred <- backtransform(DCR, simulation = simulation1[ ,"DCR"], log_return = returns$DCR)
+ETC.ret.pred <- backtransform(ETC, simulation = simulation1[ ,"ETC"], log_return = returns$ETC)
+ETH.ret.pred <- backtransform(ETH, simulation = simulation1[ ,"ETH"], log_return = returns$ETH)
+FCT.ret.pred <- backtransform(FCT, simulation = simulation1[ ,"FCT"], log_return = returns$FCT)
+FTC.ret.pred <- backtransform(FTC, simulation = simulation1[ ,"FTC"], log_return = returns$FTC)
+GNO.ret.pred <- backtransform(GNO, simulation = simulation1[ ,"GNO"], log_return = returns$GNO)
+#GNT.ret.pred <- backtransform(GNT, simulation = simulation1[ ,"GNT"], log_return = returns$GNT)
+LTC.ret.pred <- backtransform(LTC, simulation = simulation1[ ,"LTC"], log_return = returns$LTC)
+STR.ret.pred <- backtransform(STR, simulation = simulation1[ ,"STR"], log_return = returns$STR)
+VTC.ret.pred <- backtransform(VTC, simulation = simulation1[ ,"VTC"], log_return = returns$VTC)
+WNG.ret.pred <- backtransform(WNG, simulation = simulation1[ ,"WNG"], log_return = returns$WNG)
+XMR.ret.pred <- backtransform(XMR, simulation = simulation1[ ,"XMR"], log_return = returns$XMR)
+XRP.ret.pred <- backtransform(XRP, simulation = simulation1[ ,"XRP"], log_return = returns$XRP)
+ZEC.ret.pred <- backtransform(ZEC, simulation = simulation1[ ,"ZEC"], log_return = returns$ZEC)
+```
+
+Calculating variance from GARCH:
+
+$\sigma_{t+1}^2 = \omega + \alpha_1 \epsilon_t^2 + \beta_1 \sigma_t^2$
+
+We use the above equation in order to find error distribution on $T+2$ that will be inserted to ARMA equation.
+
+$\epsilon_{t+1} = \sigma_{t+1} z$
+
+# Prediction of return distribution one day ahead
+
+$r_{t+1} =  \mu + \epsilon_{t+1} + ar_1 r_t + ma_1 \epsilon_t$ 
+
+
+
+```{r, echo=FALSE, message=F, warning=F, figheight=3}
+positive.mean <- data.frame(rep(0, nsim), rep(0, nsim))
+negative.mean <- data.frame(rep(0, nsim), rep(0, nsim))
+meltdf <- data.frame(BTC=BTC.ret.pred, DCR=DCR.ret.pred, ETC=ETC.ret.pred, 
+                     ETH=ETH.ret.pred, FCT=FCT.ret.pred,
+                     FTC=FTC.ret.pred, GNO=GNO.ret.pred, 
+                     LTC=LTC.ret.pred, STR=STR.ret.pred,
+                     VTC=VTC.ret.pred, WNG=WNG.ret.pred, 
+                     XMR=XMR.ret.pred, XRP=XRP.ret.pred, ZEC=ZEC.ret.pred)
+
+
+k<- 1; j<- 1; ncol <- ncol(meltdf)
+for (i in 1:ncol){
+  if (mean(meltdf[,i]) > 0){
+    positive.mean[,k] <- meltdf[,i]
+    colnames(positive.mean)[k] <- colnames(meltdf)[i]
+    k <- k+1
+  }
+  else {
+    negative.mean[,j] <- meltdf[,i]
+    colnames(negative.mean)[j] <- colnames(meltdf)[i]
+    j <- j+1
+  }
+}
+
+
+meltdf <- melt(positive.mean)
+Monika.plots(meltdf, Title = "Prediction, positive expectation", c(-0.5,0.5))
+round(sapply(positive.mean, mean), 4)
+
+meltdf <- melt(negative.mean)
+Monika.plots(meltdf, Title = "Prediction, expectation $ < 0$ ", c(-0.5,0.5))
+round(sapply(negative.mean, mean), 4)
+```
+
+```{r, message=F, echo=F}
+# results = GET("https://en.wikipedia.org/wiki/List_of_cryptocurrencies")
+# doc = readHTMLTable(doc=content(results, "text"))
+# doc[1]
+```
+
+# Portfolio. FAT LEFT TAIL
+
+```{r, message=F, echo=F, warning=F}
+
+
+portfolio <- data.frame(rep(0,100000))
+w <-rep(1/ncol(positive.mean), ncol(positive.mean))
+for (i in 1:ncol(positive.mean)){
+  portfolio <- portfolio + w[i]*positive.mean[i]
+}
+
+colnames(portfolio) <- "Portfolio"
+
+
+portfolio <- data.frame(rep(0,100000))
+k<- 1
+w <-rep(1/ncol(positive.mean), ncol(positive.mean))
+for (i in 1:ncol(positive.mean)){
+  w[i] <- sapply(positive.mean[i], mean)/sum(abs(sapply(positive.mean, mean)))
+}
+
+w
+portfolio <- data.frame(rep(0,100000))
+
+for (i in 1:ncol(positive.mean)){
+  portfolio <- portfolio + w[i]*positive.mean[i]
+}
+
+colnames(portfolio) <- "Portfolio"
+
+
+meltdf <- data.frame(BTC=BTC.ret.pred, DCR=DCR.ret.pred, ETC=ETC.ret.pred, 
+                     ETH=ETH.ret.pred, FCT=FCT.ret.pred, FTC=FTC.ret.pred, 
+                     GNO=GNO.ret.pred, LTC=LTC.ret.pred, STR=STR.ret.pred,
+                     VTC=VTC.ret.pred, WNG=WNG.ret.pred, XMR=XMR.ret.pred, 
+                     XRP=XRP.ret.pred, ZEC=ZEC.ret.pred)
+
+portfolio <- data.frame(rep(0,100000))
+w <-rep(1/ncol(meltdf), ncol(meltdf))
+for (i in 1:ncol(meltdf)){
+  portfolio <- portfolio + w[i]*meltdf[i]
+}
+colnames(portfolio) <- "Portfolio"
+
+VaR <- sort(portfolio$Portfolio)
+VaR_05 <- VaR[5000]
+mean <- round(mean(portfolio$Portfolio), 4)
+
+ggplot(data = portfolio, aes(x=Portfolio)) +  geom_density() +  theme_bw() + 
+  ggtitle("Portfolio distribution one day ahead") +
+  theme(panel.border=element_blank()) +xlim(c(-0.4, 0.3))  + 
+  geom_vline(aes(xintercept=mean), color="red", linetype="dashed") + 
+  geom_vline(aes(xintercept=VaR_05), color="red", linetype="dashed") + 
+  geom_text(mapping=aes((VaR_05-0.03), -0.15, label = "VaR"), color="red")+
+  geom_text(mapping=aes((mean-0.035), -0.15, label = "Mean"), color="red")
+ 
+VaR_05
+median <- round(median(portfolio$Portfolio), 4)
+median
+```
+
+If investing in all assets equally, expected return is:
+
+```{r, message=F, echo=F, warning=F}
+sapply(portfolio, mean)
+```
+
+
+# Monika's section
+
+This section is to exaluate how the ARMA-GARCH fitted the marginal time series.
+
+What we pay attention: how arma garch was able to determine Value at Risk: If the red curve is able to determine and adjust to the shocks, model is working well. If the red curve resembles a line (or not too far from it), that means the data is too random. We still include those variables, since they are dependent to other variables in the model.
+
+
+
+## BTC. VaR, QQ-plot, ACF
+
+```{r, echo=FALSE, message=F, warning=F}
+analysis <- function(uGarchFit = NULL, UniformObs = NULL){
+  par(mfrow=c(2,2))
+  plot(uGarchFit, which=1); plot(uGarchFit, which=9); plot(uGarchFit, which=8);  hist(UniformObs)
+  uGarchFit@fit$matcoef
+}
+
+analysis(BTC, BTC.obs)
+```
+
+## DCR. VaR, QQ-plot, ACF
+
+```{r, echo=FALSE, message=F, warning=F}
+analysis(DCR, DCR.obs)
+```
+
+## ETC. VaR, QQ-plot, ACF
+
+```{r, echo=FALSE, message=F, warning=F}
+analysis(ETC, ETC.obs)
+```
+
+## ETH. VaR, QQ-plot, ACF
+
+```{r, echo=FALSE, message=F, warning=F}
+analysis(ETH, ETH.obs)
+```
+
+## Factom (FCT). VaR, QQ-plot, ACF
+
+```{r, echo=FALSE, message=F, warning=F}
+analysis(FCT, FCT.obs)
+```
+
+## FeatherCoin (FTC). VaR, QQ-plot, ACF
+
+```{r, echo=FALSE, message=F, warning=F}
+analysis(FTC, FTC.obs)
+```
+
+## GNO. VaR, QQ-plot, ACF
+```{r, echo=FALSE, message=F, warning=F}
+analysis(GNO, GNO.obs)
+```
+
+## GNT. VaR, QQ-plot, ACF
+```{r, echo=FALSE, message=F, warning=F}
+#analysis(GNT, GNT.obs)
+```
+
+## LTC. VaR, QQ-plot, ACF
+```{r, echo=FALSE, message=F, warning=F}
+analysis(LTC, LTC.obs)
+```
+
+## STR. VaR, QQ-plot, ACF
+
+```{r, echo=FALSE, message=F, warning=F}
+analysis(STR, STR.obs)
+```
+
+## VTC. VaR, QQ-plot, ACF
+
+```{r, echo=FALSE, message=F, warning=F}
+analysis(VTC, VTC.obs)
+```
+
+## WNG. VaR, QQ-plot, ACF
+
+```{r, echo=FALSE, message=F, warning=F}
+analysis(WNG, WNG.obs)
+```
+
+## XMR. VaR, QQ-plot, ACF
+
+```{r, echo=FALSE, message=F, warning=F}
+analysis(XMR, XMR.obs)
+```
+
+## XRP. VaR, QQ-plot, ACF
+
+```{r, echo=FALSE, message=F, warning=F}
+analysis(XRP, XRP.obs)
+```
+
+## ZEC. VaR, QQ-plot, ACF
+
+```{r, echo=FALSE, message=F, warning=F}
+analysis(ZEC, ZEC.obs)
+```
