@@ -156,33 +156,288 @@ denotes the total population. The population size is assumed to be constant over
 \end{center}
 \end{figure}
 -->
-<p>The following shows ODE system which describes the model. In black is the baseline model and vaccination is highlighted in blue. <span class="math display">\[ 
+<p>The following shows ODE system which describes the model. In black is the baseline model and vaccination is highlighted in blue.</p>
+<p><span class="math display">\[ 
 \begin{aligned}
-\frac{\diff{S_1(t)}}{\diff{t}} &amp;= {\color{blue}(1-\phi)fN} - \lambda_1(t)\sigma_1S_1(t) - \lambda_1(t)(1-\sigma_1)S_1(t)+\epsilon R_1(t) -\delta_1S_1(t) +{\color{blue}\tau V_1(t)}\\
-{\color{blue}\frac{\diff{V_1(t)}}{\diff{t}}} &amp;= {\color{blue}  \phi fN  -\tau V_1(t) -\delta_1 V_1(t)-\lambda_1(1-\eta_S)\sigma_1 V_1(t) -\lambda_1(1-\eta_M)(1-\sigma_1) V_1(t)}\\
-\frac{\diff{I_{S1}(t)}}{\diff{t}} &amp;= \lambda_1(t)\sigma_1S_1(t) - \gamma_S I_{S1}(t) -\delta_1I_{S1}(t) +{\color{blue}\lambda_1(1-\eta_S)\sigma_1 V_1(t)} \\
-\frac{\diff{I_{M1}(t)}}{\diff{t}} &amp;= \lambda_1(t)(1-\sigma_1)S_1(t) - \gamma_M I_{M1}(t) -\delta_1I_{M1}(t) + {\color{blue}\lambda_1(1-\eta_M)(1-\sigma_1) V_1(t)} \\
-\frac{\diff{R_1(t)}}{\diff{t}} &amp;= \gamma_S I_{S1}(t) +\gamma_MI_{M1}(t) -\epsilon R_1(t) -\delta_1 R_1(t) \\
-\frac{\diff{S_2(t)}}{\diff{t}} &amp;= - \lambda_2(t)\sigma_2S_2(t) - \lambda_2(t)(1-\sigma_2)S_2(t)+\epsilon R_2(t) +\delta_1S_1(t) -\delta_2S_2(t)  +{\color{blue}\tau V_2(t)} \\
-{\color{blue}\frac{\diff{V_2(t)}}{\diff{t}}} &amp;= {\color{blue} -\tau V_2(t) +\delta_1 V_1(t) -\delta_2 V_2(t) -\lambda_2(1-\eta_S)\sigma_2 V_2(t) -\lambda_2(1-\eta_M)(1-\sigma_2) V_2(t)}\\
-\frac{\diff{I_{S2}(t)}}{\diff{t}} &amp;= \lambda_2(t)\sigma_2S_2(t) - \gamma_S I_{S2}(t) +\delta_1I_{S1}(t) -\delta_2I_{S2}(t) 
-+{\color{blue}\lambda_2(1-\eta_S)\sigma_2 V_2(t)} \\
-\frac{\diff{I_{M2}(t)}}{\diff{t}} &amp;= \lambda_2(t)(1-\sigma_2)S_2(t) - \gamma_M I_{M2}(t) +\delta_1I_{M1}(t) -\delta_2I_{M2}(t) + {\color{blue}\lambda_2(1-\eta_M)(1-\sigma_2) V_2(t)} \\
-\frac{\diff{R_2(t)}}{\diff{t}} &amp;= \gamma_S I_{S2}(t) +\gamma_MI_{M2}(t) -\epsilon R_2(t) +\delta_1 R_1(t) -\delta_2 R_2(t) \\
-\frac{\diff{S_3(t)}}{\diff{t}} &amp;= - \lambda_3(t)\sigma_3S_3(t) - \lambda_3(t)(1-\sigma_3)S_3(t)+\epsilon R_3(t) +\delta_2S_2(t) -\mu S_3(t) +{\color{blue}\tau V_3(t)}\\
-{\color{blue}\frac{\diff{V_3(t)}}{\diff{t}}} &amp;= {\color{blue} -\tau V_3(t) +\delta_2 V_2(t) -\lambda_3(1-\eta_S)\sigma_3 V_3(t) -\lambda_3(1-\eta_M)(1-\sigma_3) V_3(t) -\mu V_3(t)}\\
-\frac{\diff{I_{S3}(t)}}{\diff{t}} &amp;= \lambda_3(t)\sigma_3S_3(t) - \gamma_S I_{S3}(t) +\delta_2I_{S2}(t) -\mu I_{S3}(t) 
-+{\color{blue}\lambda_3(1-\eta_S)\sigma_3 V_3(t)} \\
-\frac{\diff{I_{M3}(t)}}{\diff{t}} &amp;= \lambda_3(t)(1-\sigma_3)S_3(t) - \gamma_M I_{M3}(t) +\delta_2I_{M2}(t) -\mu I_{M3}(t) + {\color{blue}\lambda_3(1-\eta_M)(1-\sigma_3) V_3(t)} \\
-\frac{\diff{R_3(t)}}{\diff{t}} &amp;= \gamma_S I_{S3}(t) +\gamma_MI_{M3}(t) -\epsilon R_3(t) +\delta_2 R_2(t) -\mu R_3(t)+ {\color{blue}\lambda_3(1-\eta_M)(1-\sigma_3) V_3(t)} \\\\
-\end{aligned} \]</span></p>
-The following table contains the variables and parameters we have used for simulating the model:
+\frac{\partial{S_1(t)}}{\partial{t}} &amp;= \color{blue}{(1-\phi)fN} - \lambda_1(t)\sigma_1S_1(t) - \lambda_1(t)(1-\sigma_1)S_1(t)+\epsilon R_1(t) -\delta_1S_1(t) +\color{blue}{\tau V_1(t)} \\
+\color{blue}{\frac{\partial{V_1(t)}}{\partial{t}}} &amp;= \color{blue}{\phi fN  -\tau V_1(t) -\delta_1 V_1(t)-\lambda_1(1-\eta_S)\sigma_1 V_1(t) -\lambda_1(1-\eta_M)(1-\sigma_1) V_1(t)} \\
+\frac{\partial{I_{S1}(t)}}{\partial{t}} &amp;= \lambda_1(t)\sigma_1S_1(t) - \gamma_S I_{S1}(t) -\delta_1I_{S1}(t) +\color{blue}{\lambda_1(1-\eta_S)\sigma_1 V_1(t)} \\
+\frac{\partial{I_{M1}(t)}}{\partial{t}} &amp;= \lambda_1(t)(1-\sigma_1)S_1(t) - \gamma_M I_{M1}(t) -\delta_1I_{M1}(t) + \color{blue}{\lambda_1(1-\eta_M)(1-\sigma_1) V_1(t)} \\
+\frac{\partial{R_1(t)}}{\partial{t}} &amp;= \gamma_S I_{S1}(t) +\gamma_MI_{M1}(t) -\epsilon R_1(t) -\delta_1 R_1(t) \\
+\frac{\partial{S_2(t)}}{\partial{t}} &amp;= - \lambda_2(t)\sigma_2S_2(t) - \lambda_2(t)(1-\sigma_2)S_2(t)+\epsilon R_2(t) +\delta_1S_1(t) -\delta_2S_2(t)  + \color{blue}{\tau V_2(t)} \\
+\color{blue}{\frac{\partial{V_2(t)}}{\partial{t}}} &amp;= \color{blue}{ -\tau V_2(t) +\delta_1 V_1(t) -\delta_2 V_2(t) -\lambda_2(1-\eta_S)\sigma_2 V_2(t) -\lambda_2(1-\eta_M)(1-\sigma_2) V_2(t)}\\
+\frac{\partial{I_{S2}(t)}}{\partial{t}} &amp;= \lambda_2(t)\sigma_2S_2(t) - \gamma_S I_{S2}(t) +\delta_1I_{S1}(t) -\delta_2I_{S2}(t) 
++\color{blue}{\lambda_2(1-\eta_S)\sigma_2 V_2(t)} \\
+\frac{\partial{I_{M2}(t)}}{\partial{t}} &amp;= \lambda_2(t)(1-\sigma_2)S_2(t) - \gamma_M I_{M2}(t) +\delta_1I_{M1}(t) -\delta_2I_{M2}(t) + \color{blue}{\lambda_2(1-\eta_M)(1-\sigma_2) V_2(t)} \\
+\frac{\partial{R_2(t)}}{\partial{t}} &amp;= \gamma_S I_{S2}(t) +\gamma_MI_{M2}(t) -\epsilon R_2(t) +\delta_1 R_1(t) -\delta_2 R_2(t) \\
+\frac{\partial{S_3(t)}}{\partial{t}} &amp;= - \lambda_3(t)\sigma_3S_3(t) - \lambda_3(t)(1-\sigma_3)S_3(t)+\epsilon R_3(t) +\delta_2S_2(t) -\mu S_3(t) + \color{blue}{\tau V_3(t)}\\
+\color{blue}{\frac{\partial{V_3(t)}}{\partial{t}}} &amp;= \color{blue}{ -\tau V_3(t) +\delta_2 V_2(t) -\lambda_3(1-\eta_S)\sigma_3 V_3(t) -\lambda_3(1-\eta_M)(1-\sigma_3) V_3(t) -\mu V_3(t)}\\
+\frac{\partial{I_{S3}(t)}}{\partial{t}} &amp;= \lambda_3(t)\sigma_3S_3(t) - \gamma_S I_{S3}(t) +\delta_2I_{S2}(t) -\mu I_{S3}(t) 
++\color{blue}{\lambda_3(1-\eta_S)\sigma_3 V_3(t)} \\
+\frac{\partial{I_{M3}(t)}}{\partial{t}} &amp;= \lambda_3(t)(1-\sigma_3)S_3(t) - \gamma_M I_{M3}(t) +\delta_2I_{M2}(t) -\mu I_{M3}(t) + \color{blue}{\lambda_3(1-\eta_M)(1-\sigma_3) V_3(t)} \\
+\frac{\partial{R_3(t)}}{\partial{t}} &amp;= \gamma_S I_{S3}(t) +\gamma_MI_{M3}(t) -\epsilon R_3(t) +\delta_2 R_2(t) -\mu R_3(t)+ \color{blue}{\lambda_3(1-\eta_M)(1-\sigma_3) V_3(t)} \\ 
+\end{aligned}
+\]</span></p>
+<p>The following table contains the variables and parameters we have used for simulating the model:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Variables (at time <span class="math inline">\(t\)</span> and for age group <span class="math inline">\(i\)</span>)</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(S_i(t)\)</span></td>
+<td>Number of susceptible individuals</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(I_{Si}(t)\)</span></td>
+<td>Number of severe infectious individuals</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(I_{Mi}(t)\)</span></td>
+<td>Number of mild infectious individuals</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(I_{Si}(t)\)</span></td>
+<td>Number of mild infectious individuals</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(R_{i}(t)\)</span></td>
+<td>Number of recovered individuals</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(V_{i}(t)\)</span></td>
+<td>Number of vaccinated individuals</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Explanation</th>
+<th>Value</th>
+<th>Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(A\)</span></td>
+<td>seasonal transmission amplitude</td>
+<td>0.064</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(b_i\)</span></td>
+<td>Susceptibility of age group <span class="math inline">\(i\)</span></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(i=1\)</span></td>
+<td></td>
+<td>0.06</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(i=2\)</span></td>
+<td></td>
+<td>0.003</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(i=3\)</span></td>
+<td></td>
+<td>0.025</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(C(k,i)\)</span></td>
+<td>Social contact rate from age group <span class="math inline">\(k\)</span> to <span class="math inline">\(j\)</span></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(f\)</span></td>
+<td>birth rate (annual per person)</td>
+<td>0.0118</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(i\)</span></td>
+<td>age group</td>
+<td>1,2,3</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\beta(t,k,i)\)</span></td>
+<td>Transmission rate from contact from age groups <span class="math inline">\(k\)</span> to <span class="math inline">\(i\)</span></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\gamma_M\)</span></td>
+<td>Mild recovery rate (per day)</td>
+<td>1/3.5</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\gamma_S\)</span></td>
+<td>Severe recovery rate (per day)</td>
+<td>1/7</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\delta_i\)</span></td>
+<td>Aging rate for age group (per day) <span class="math inline">\(i\)</span></td>
+<td></td>
+<td>calibrated</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(i=1\)</span></td>
+<td></td>
+<td>1/(4<span class="math inline">\(\cdot\)</span> 365)</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(i=2\)</span></td>
+<td></td>
+<td>1/(60<span class="math inline">\(\cdot\)</span> 365)</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\varepsilon\)</span></td>
+<td>Natural immunity waning rate (per day)</td>
+<td>1/365</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\eta_M\)</span></td>
+<td>Vaccine efficacy for mild infection</td>
+<td>0.64</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\eta_S\)</span></td>
+<td>Vaccine efficacy for severe infection</td>
+<td>1</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\theta\)</span></td>
+<td>Seasonal offset in transmission</td>
+<td>4.622</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\lambda_i(t)\)</span></td>
+<td>Force of infection</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\rho\)</span></td>
+<td>Reduction in infectiousness for mild infections</td>
+<td>0.5</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\theta_i\)</span></td>
+<td>Proportion severe infections</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(i=1\)</span></td>
+<td></td>
+<td>0.24</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(i=2\)</span></td>
+<td></td>
+<td>0.015</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(i=3\)</span></td>
+<td></td>
+<td>0.015</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\tau_i\)</span></td>
+<td>Vaccine immunity waning rate (per year)</td>
+<td></td>
+<td>calibrated</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(i=1\)</span></td>
+<td></td>
+<td>1/3</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(i=2\)</span></td>
+<td></td>
+<td>1/3</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(i=3\)</span></td>
+<td></td>
+<td>1/3</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\phi\)</span></td>
+<td>Vaccine coverage</td>
+<td>0.9</td>
+<td>calibrated</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(N\)</span></td>
+<td>Total popluation size in Sweden</td>
+<td>9555893</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>For the contact matrix we chose the data from the POLYMOD study for Finland because it was the only Nordic country in the study and we assumed contact structures in both countries to be similar:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>0-4</th>
+<th>5-65</th>
+<th>65+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0-4</td>
+<td>1.97</td>
+<td>5.88</td>
+<td>0.31</td>
+</tr>
+<tr class="even">
+<td>5-65</td>
+<td>6.55</td>
+<td>10.32</td>
+<td>3.48</td>
+</tr>
+<tr class="odd">
+<td>65+</td>
+<td>0.34</td>
+<td>3.005</td>
+<td>2.08</td>
+</tr>
+</tbody>
+</table>
 
-
-For the contact matrix we chose the data from the POLYMOD study for Finland because it was the only Nordic country in the study and we assumed contact structures in both countries to be similar:
-
-
-We vary rates of waning immunity (natural immunity and after vaccination immunity), vaccination coverage and vaccine effectiveness. We will illustrate the number of mildly and severely infected individuals of each age group over a time interval where we calibrated the number of infected to the observed number of infected children from 2012-2013 and predict for 10 years into the future from 2012- 2023 in one graph and compare that to the different scenarios which are the following: (the bold scenarios are considered baseline scenarios e.g we kept constant while varying the respective aspect in the model )
+<p>We vary rates of waning immunity (natural immunity and after vaccination immunity), vaccination coverage and vaccine effectiveness. We will illustrate the number of mildly and severely infected individuals of each age group over a time interval where we calibrated the number of infected to the observed number of infected children from 2012-2013 and predict for 10 years into the future from 2012- 2023 in one graph and compare that to the different scenarios which are the following: (the bold scenarios are considered baseline scenarios e.g we kept constant while varying the respective aspect in the model )</p>
 
 <p>The data we use for calibration is the accumulated number of sick children under 4 years over one year, according to the severity of their disease (mild or hospitalized). The respective values we took from : \</p>
 <p>2012: mild: 11 641 hospitalized: 3 531 \ 2013: mild: 12 189 hospitalized: 3 712 \</p>
