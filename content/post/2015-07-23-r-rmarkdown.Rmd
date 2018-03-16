@@ -209,6 +209,7 @@ For the contact matrix we chose the data from the POLYMOD study for Finland beca
 \subsection{Experiment design:}
 We vary rates of waning immunity (natural immunity and after vaccination immunity), vaccination coverage and vaccine effectiveness. We will illustrate the number of mildly and severely infected individuals of each age group over a time interval where we calibrated the number of infected to the observed number of infected children from 2012-2013 and predict for  10 years into the future from 2012- 2023 in one graph and compare that to the different scenarios which are the following: (the bold scenarios are considered baseline scenarios e.g we kept constant while varying the respective aspect in the model )
 
+<!--
 \begin{enumerate}
 \item  Duration of immunity
 \begin{enumerate}
@@ -226,7 +227,8 @@ We vary rates of waning immunity (natural immunity and after vaccination immunit
 \item 90 \% for mild cases, 100 \% for severe cases
 \end{enumerate} 
 \end{enumerate}
-  
+-->
+
 \noindent The data we use for calibration is the accumulated number of sick children under 4 years over one year, according to the severity of their disease (mild or hospitalized). The respective values we took from \cite{swe}: \\
 
 \noindent 2012: mild: 11 641 hospitalized: 3 531 \\
@@ -349,6 +351,8 @@ In the 4. scenario we assumed that the vaccination is nearly perfect, the covera
 This project is the joint work of Angeliki Maraki, Monika Monstvilaite and Theresa Stocks. Everyone contributed to all parts of the work equally. We met daily at the university and we used Dropbox \cite{drop} and ShareLaTeX \cite{lat} to work on the project simultaneously.  Many fruitful discussions within the group lead to the presented results and all decisions concerning the approach of the problem and the model design were agreed on.
 We thank Tobias Fasth, who was the main supervisor for this project, for his helpful comments. 
 
+
+<!--
 \begin{thebibliography}{9}
 
 \bibitem{web}
@@ -406,3 +410,5 @@ Wales},
   http://www.statistikdatabasen.scb.se,
  2015.
 \end{thebibliography}
+
+-->
