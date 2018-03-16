@@ -9,7 +9,7 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="author" content="Frida Gomam" />
+<meta name="author" content="Monika Monstvilaite, Theresa Stocks, Angeliki Maraki" />
 
 
 <title>Sweden Vaccination</title>
@@ -119,7 +119,7 @@ $(document).ready(function () {
 
 
 <h1 class="title toc-ignore">Sweden Vaccination</h1>
-<h4 class="author"><em>Frida Gomam</em></h4>
+<h4 class="author"><em>Monika Monstvilaite, Theresa Stocks, Angeliki Maraki</em></h4>
 <h4 class="date"><em>2015-07-23T21:13:14-05:00</em></h4>
 
 </div>
@@ -137,7 +137,7 @@ Our goal is to create a model that could be used to assess the implementation of
 
 <p>We want to implement a model for assessing the impact of rotavirus infection within the population of Sweden. Our model is based on a previously published model and assumes vaccination . We start with a baseline model which does not include vaccination.</p>
 
-We build a model structure which uses a combination of age specific susceptibility and temporary immunity to mimic the loss of immunity acquired by previous infections over time. We subdivide the population into a number of compartments, stratified by the age of the host and the state of the host. We consider a model that subdivides the population into three age classes, into individuals younger than 5 years and individuals from 5- 65 years and all individuals older than 66 years, identified by subscripts 1, 2 and 3 respectively. Such a stratification seems reasonable because children under 5 years are the most susceptible to the disease whereas individuals above 5 have a stronger immune system and are less susceptible. However, in the last stage of life individuals are more susceptible to the disease again due to natural waning of immunity and a weaker immune system. Individuals age with a rate <span class="math inline">\(\delta_i\)</span> from one age class into another. We distinguish between mild infections which are assumed to be less infectious and severe infections which in most cases lead to hospitalization of the patient, but we ignore asymptomatic infections because we assume that their infectious pressure is too low to have an effect on the epidemic curve. Also for reasons of simplicity, we will ignore a latent period, since we believe that its effect on the epidemic curve is neglectable since the latent period is very short. The variables <span class="math inline">\(S_i(t), I_{Mi}(t), I_{Si}(t)\)</span> and <span class="math inline">\(R_i(t)\in \mathbb{N}\)</span> with <span class="math inline">\(i\in \{1,2,3\}\)</span> count the number of susceptible, mildly and severely infectious, and recovered individuals for each of the three age groups at time <span class="math inline">\(t\in \mathbb{R}_0^+\)</span> while
+<p>We build a model structure which uses a combination of age specific susceptibility and temporary immunity to mimic the loss of immunity acquired by previous infections over time. We subdivide the population into a number of compartments, stratified by the age of the host and the state of the host. We consider a model that subdivides the population into three age classes, into individuals younger than 5 years and individuals from 5- 65 years and all individuals older than 66 years, identified by subscripts 1, 2 and 3 respectively. Such a stratification seems reasonable because children under 5 years are the most susceptible to the disease whereas individuals above 5 have a stronger immune system and are less susceptible. However, in the last stage of life individuals are more susceptible to the disease again due to natural waning of immunity and a weaker immune system. Individuals age with a rate <span class="math inline">\(\delta_i\)</span> from one age class into another. We distinguish between mild infections which are assumed to be less infectious and severe infections which in most cases lead to hospitalization of the patient, but we ignore asymptomatic infections because we assume that their infectious pressure is too low to have an effect on the epidemic curve. Also for reasons of simplicity, we will ignore a latent period, since we believe that its effect on the epidemic curve is neglectable since the latent period is very short. The variables <span class="math inline">\(S_i(t), I_{Mi}(t), I_{Si}(t)\)</span> and <span class="math inline">\(R_i(t)\in \mathbb{N}\)</span> with <span class="math inline">\(i\in \{1,2,3\}\)</span> count the number of susceptible, mildly and severely infectious, and recovered individuals for each of the three age groups at time <span class="math inline">\(t\in \mathbb{R}_0^+\)</span> while</p>
 <span class="math display">\[\begin{equation*}
 N=\sum_{i=1}^3 S_i(t)+\sum_{i=1}^3  I_{Mi}(t)+\sum_{i=1}^3  I_{Si}(t)+\sum_{i=1}^3  R_i(t)
 \end{equation*}\]</span>
@@ -148,9 +148,16 @@ denotes the total population. The population size is assumed to be constant over
 <p>with <span class="math inline">\(N_3\)</span> being the number of individuals in the oldest age group. Since the population size of Sweden is large (approx. 9.5 M) we used a deterministic model to explain Rotavirus transmission because we assumed that for a large number the stochastic system approaches the deterministic system. The conceptual description of the model can be represented by a flow diagram, see Figure . Once infected, the diseases can follow either a severe or mild course with probability <span class="math inline">\(\sigma_i\)</span> or 1-<span class="math inline">\(\sigma_i\)</span> respectively. Since the severe infections mostly occur in the youngest or oldest age group we chose this parameter to be age dependent. The force of infection <span class="math inline">\(\lambda_i(t)\)</span> is the per capita rate at which susceptible become infected. Susceptible individuals from age group <span class="math inline">\(i\)</span> have a susceptibility of <span class="math inline">\(b_i\)</span> and can become infected either by being infected by an infectious from age group 1, 2 or 3. The contact-matrix <span class="math inline">\(C \in \mathcal{R}^{3\times 3}\)</span> is taken from the European POLYMOD study  for Finland, since it was the only Nordic country in the study. Since rotavirus is a seasonal disease peaking in winter we included a seasonal forcing which is also used in . Putting this together we obtain a force of infection as:\ 2 where <span class="math inline">\(\rho\)</span> is the assumed reduction of infectiousness for a mild case in comparison to a severe case, $$ denotes the offset in transmission and <span class="math inline">\(A\)</span> is the seasonal transmission amplitude. The mean time individuals stay severely or mildly infectious is <span class="math inline">\(1/\gamma_S\)</span> and <span class="math inline">\(1/\gamma_M\)</span> respectively. We assume that recovered individuals loose immunity with a rate <span class="math inline">\(\varepsilon\)</span> which is age independent. After loss of immunity the individual returns to a state of fully susceptibility again. We chose the simulation interval to be daily.</p>
 
 <p>At time t=0 the government decides for a mandatory vaccination of children in the first age group (only one dose). From that time point, the fraction <span class="math inline">\(\phi\)</span> (vaccination coverage) of all newborn children receive the vaccine, while the remaining <span class="math inline">\((1-\phi)\)</span> fraction of children being born at the same time point are assumed to be fully susceptible. We ignore a protection by maternal antibodies during the first month after birth and for reasons of simplicity we assume that children are either vaccinated or not-vaccinated in contrast to reality where, dependent on the vaccine, either two or three doses are necessary for a good protection. A good justification for this simplification is the fact that 98.74 <span class="math inline">\(\%\)</span>  of all infants receiving the first vaccine dose will also receive the second and the third (if there is one depending on the vaccine type). Moreover, our model accounts for waning of vaccine immunity. An individual of age group <span class="math inline">\(i\)</span> is protected by the vaccine for a mean time of <span class="math inline">\(1/\tau\)</span> weeks before returning to fully susceptibility again. The vaccine is assumed to not be perfect, but having a efficacy for mild infection of <span class="math inline">\(\eta_M\)</span> and for severe infection of <span class="math inline">\(\eta_S\)</span> . Hence vaccinated individuals can be infected with rate <span class="math inline">\(\lambda_i(1-\eta_S)(1-\sigma_i)\)</span> and <span class="math inline">\(\lambda_i(1-\eta_S)\sigma_i\)</span> respectively. As in the baseline model, the vaccinated individuals age into an older age compartment with rate <span class="math inline">\(\delta_i\)</span> and die in the oldest age group with rate <span class="math inline">\(\mu\)</span>.</p>
-
-The following shows ODE system which describes the model. In black is the baseline model and vaccination is highlighted in blue.
-<span class="math display">\[\begin{align*}
+<!--   
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.5]{mod.png}
+\caption{Schematic representation of the model} \label{mod}
+\end{center}
+\end{figure}
+-->
+<p>The following shows ODE system which describes the model. In black is the baseline model and vaccination is highlighted in blue. <span class="math display">\[ 
+\begin{aligned}
 \frac{\diff{S_1(t)}}{\diff{t}} &amp;= {\color{blue}(1-\phi)fN} - \lambda_1(t)\sigma_1S_1(t) - \lambda_1(t)(1-\sigma_1)S_1(t)+\epsilon R_1(t) -\delta_1S_1(t) +{\color{blue}\tau V_1(t)}\\
 {\color{blue}\frac{\diff{V_1(t)}}{\diff{t}}} &amp;= {\color{blue}  \phi fN  -\tau V_1(t) -\delta_1 V_1(t)-\lambda_1(1-\eta_S)\sigma_1 V_1(t) -\lambda_1(1-\eta_M)(1-\sigma_1) V_1(t)}\\
 \frac{\diff{I_{S1}(t)}}{\diff{t}} &amp;= \lambda_1(t)\sigma_1S_1(t) - \gamma_S I_{S1}(t) -\delta_1I_{S1}(t) +{\color{blue}\lambda_1(1-\eta_S)\sigma_1 V_1(t)} \\
@@ -168,7 +175,7 @@ The following shows ODE system which describes the model. In black is the baseli
 +{\color{blue}\lambda_3(1-\eta_S)\sigma_3 V_3(t)} \\
 \frac{\diff{I_{M3}(t)}}{\diff{t}} &amp;= \lambda_3(t)(1-\sigma_3)S_3(t) - \gamma_M I_{M3}(t) +\delta_2I_{M2}(t) -\mu I_{M3}(t) + {\color{blue}\lambda_3(1-\eta_M)(1-\sigma_3) V_3(t)} \\
 \frac{\diff{R_3(t)}}{\diff{t}} &amp;= \gamma_S I_{S3}(t) +\gamma_MI_{M3}(t) -\epsilon R_3(t) +\delta_2 R_2(t) -\mu R_3(t)+ {\color{blue}\lambda_3(1-\eta_M)(1-\sigma_3) V_3(t)} \\\\
-\end{align*}\]</span>
+\end{aligned} \]</span></p>
 The following table contains the variables and parameters we have used for simulating the model:
 
 
