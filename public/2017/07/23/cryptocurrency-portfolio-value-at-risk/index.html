@@ -12,17 +12,17 @@
     <title>Cryptocurrency portfolio Value-at-Risk :: A Hugo website</title>
     
     
-    <link href="/css/nucleus.css?1521321818" rel="stylesheet">
-    <link href="/css/font-awesome.min.css?1521321818" rel="stylesheet">
-    <link href="/css/hybrid.css?1521321818" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1521321818" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1521321818" rel="stylesheet">
-    <link href="/css/auto-complete.css?1521321818" rel="stylesheet">
-    <link href="/css/theme.css?1521321818" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1521321818" rel="stylesheet">
+    <link href="/css/nucleus.css?1521322730" rel="stylesheet">
+    <link href="/css/font-awesome.min.css?1521322730" rel="stylesheet">
+    <link href="/css/hybrid.css?1521322730" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1521322730" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1521322730" rel="stylesheet">
+    <link href="/css/auto-complete.css?1521322730" rel="stylesheet">
+    <link href="/css/theme.css?1521322730" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1521322730" rel="stylesheet">
     
 
-    <script src="/js/jquery-2.x.min.js?1521321818"></script>
+    <script src="/js/jquery-2.x.min.js?1521322730"></script>
     
     <style type="text/css">
       :root #header + #content > #left > #rlblock_left{ 
@@ -67,14 +67,14 @@
     <span data-search-clear=""><i class="fa fa-close"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1521321818"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1521321818"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1521322730"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1521322730"></script>
 <script type="text/javascript">
     
         var baseurl = '\/';
     
 </script>
-<script type="text/javascript" src="/js/search.js?1521321818"></script>
+<script type="text/javascript" src="/js/search.js?1521322730"></script>
 
     
   </div>
@@ -278,12 +278,12 @@
 <p>Here is descriptive analysis of historical returns. See mean, median, min and max value for each cryptocurrency from 2017-08-29 02:00:00 to 2018-03-17 01:00:00:</p>
 <p>The historical means of the data are the following:</p>
 <pre><code>##    BCH    BTC    DCR    ETC    ETH    FCT    FTC    GNO    LTC    NEO 
-##  0.003  0.003  0.002  0.000  0.002 -0.002  0.007 -0.004  0.004  0.003 
+##  0.003  0.003  0.002  0.000  0.002 -0.001  0.007 -0.004  0.004  0.003 
 ##    STR    VTC    WNG    XMR    XRP    ZEC 
 ## -0.002  0.005 -0.002  0.002  0.005 -0.001</code></pre>
 <p>The historical variance of data is the following:</p>
 <pre><code>##   BCH   BTC   DCR   ETC   ETH   FCT   FTC   GNO   LTC   NEO   STR   VTC 
-## 0.100 0.060 0.085 0.093 0.063 0.100 0.121 0.110 0.086 0.101 0.113 0.114 
+## 0.100 0.060 0.085 0.093 0.063 0.100 0.121 0.110 0.086 0.101 0.113 0.113 
 ##   WNG   XMR   XRP   ZEC 
 ## 0.106 0.080 0.101 0.078</code></pre>
 <p><img src="/post/2018-01-30-crypto-dependencies_files/figure-html/unnamed-chunk-6-1.png" width="336" /><img src="/post/2018-01-30-crypto-dependencies_files/figure-html/unnamed-chunk-6-2.png" width="336" /></p>
@@ -366,24 +366,24 @@
 <p><span class="math inline">\(r_{t+1} = \mu + \epsilon_{t+1} + ar_1 r_t + ma_1 \epsilon_t\)</span></p>
 <p><img src="/post/2018-01-30-crypto-dependencies_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <pre><code>##    BTC    DCR    ETC    ETH    FCT    FTC    GNO    LTC    STR    VTC 
-## 0.0001 0.0002 0.0106 0.0002 0.0136 0.0055 0.0098 0.0082 0.0176 0.0006 
+## 0.0001 0.0004 0.0082 0.0002 0.0097 0.0042 0.0079 0.0066 0.0146 0.0003 
 ##    WNG    XMR    XRP    ZEC 
-## 0.0184 0.0149 0.0120 0.0057</code></pre>
+## 0.0173 0.0117 0.0095 0.0045</code></pre>
 <p><img src="/post/2018-01-30-crypto-dependencies_files/figure-html/unnamed-chunk-12-2.png" width="672" /></p>
 <pre><code>##   rep.0..nsim. rep.0..nsim..1 
 ##              0              0</code></pre>
 </div>
 <div id="portfolio.-fat-left-tail" class="section level1">
 <h1>Portfolio. FAT LEFT TAIL</h1>
-<pre><code>##  [1] 0.0009431313 0.0015072099 0.0899674598 0.0015350037 0.1161572525
-##  [6] 0.0472769451 0.0831532646 0.0700024570 0.1502313949 0.0049425826
-## [11] 0.1570112806 0.1269523460 0.1020276062 0.0482920658</code></pre>
+<pre><code>##  [1] 0.001058049 0.004024177 0.085831141 0.002198489 0.102302411
+##  [6] 0.043696113 0.083401419 0.069109148 0.153044871 0.002776931
+## [11] 0.181838569 0.123089212 0.100035168 0.047594301</code></pre>
 <p><img src="/post/2018-01-30-crypto-dependencies_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
-<pre><code>## [1] -0.1078018</code></pre>
-<pre><code>## [1] 0.0159</code></pre>
+<pre><code>## [1] -0.1069588</code></pre>
+<pre><code>## [1] 0.0143</code></pre>
 <p>If investing in all assets equally, expected return is:</p>
 <pre><code>##   Portfolio 
-## 0.008376615</code></pre>
+## 0.006799479</code></pre>
 </div>
 <div id="monikas-section" class="section level1">
 <h1>Monika’s section</h1>
@@ -392,71 +392,71 @@
 <div id="btc.-var-qq-plot-acf" class="section level2">
 <h2>BTC. VaR, QQ-plot, ACF</h2>
 <p><img src="/post/2018-01-30-crypto-dependencies_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
-<pre><code>##            Estimate   Std. Error   t value     Pr(&gt;|t|)
-## omega  0.0003293632 0.0005210601 0.6321023 5.273201e-01
-## alpha1 0.0913160136 0.0822992122 1.1095612 2.671882e-01
-## beta1  0.8265142726 0.2031846532 4.0677987 4.745935e-05
-## shape  6.6270769349 3.6744676676 1.8035475 7.130227e-02</code></pre>
+<pre><code>##            Estimate  Std. Error   t value     Pr(&gt;|t|)
+## omega  0.0003132586 0.000517256 0.6056161 5.447697e-01
+## alpha1 0.0898454691 0.083778813 1.0724128 2.835347e-01
+## beta1  0.8322495922 0.204487287 4.0699332 4.702663e-05
+## shape  6.4451335232 3.502682810 1.8400563 6.575997e-02</code></pre>
 </div>
 <div id="dcr.-var-qq-plot-acf" class="section level2">
 <h2>DCR. VaR, QQ-plot, ACF</h2>
 <p><img src="/post/2018-01-30-crypto-dependencies_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 <pre><code>##            Estimate   Std. Error      t value   Pr(&gt;|t|)
-## omega  1.393564e-05 1.573803e-05 8.854759e-01 0.37590002
-## alpha1 5.837574e-11 4.840587e-03 1.205964e-08 0.99999999
-## beta1  9.990000e-01 1.612500e-03 6.195348e+02 0.00000000
-## shape  7.623662e+00 3.561732e+00 2.140437e+00 0.03231949</code></pre>
+## omega  1.376746e-05 1.613527e-05 8.532524e-01 0.39351933
+## alpha1 8.176509e-11 5.110017e-03 1.600094e-08 0.99999999
+## beta1  9.989999e-01 1.678606e-03 5.951365e+02 0.00000000
+## shape  7.564855e+00 3.330533e+00 2.271365e+00 0.02312492</code></pre>
 </div>
 <div id="etc.-var-qq-plot-acf" class="section level2">
 <h2>ETC. VaR, QQ-plot, ACF</h2>
 <p><img src="/post/2018-01-30-crypto-dependencies_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
-<pre><code>##             Estimate   Std. Error    t value     Pr(&gt;|t|)
-## ma1    -0.1153926415 0.0656533364 -1.7576051 7.881472e-02
-## omega   0.0001504883 0.0002177251  0.6911848 4.894494e-01
-## alpha1  0.0980825596 0.0467280620  2.0990076 3.581623e-02
-## beta1   0.9009174384 0.0452417165 19.9134230 0.000000e+00
-## shape   3.0440023883 0.5548283372  5.4863859 4.102401e-08</code></pre>
+<pre><code>##            Estimate   Std. Error   t value     Pr(&gt;|t|)
+## ma1    -0.115343416 0.0653987802 -1.763694 7.778356e-02
+## omega   0.000148263 0.0002133022  0.695084 4.870026e-01
+## alpha1  0.098150054 0.0464390186  2.113526 3.455581e-02
+## beta1   0.900849944 0.0446426230 20.179145 0.000000e+00
+## shape   3.038735545 0.5503680906  5.521279 3.365417e-08</code></pre>
 </div>
 <div id="eth.-var-qq-plot-acf" class="section level2">
 <h2>ETH. VaR, QQ-plot, ACF</h2>
 <p><img src="/post/2018-01-30-crypto-dependencies_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <pre><code>##            Estimate   Std. Error  t value     Pr(&gt;|t|)
-## omega  0.0003211263 0.0002458387 1.306248 1.914682e-01
-## alpha1 0.2183740051 0.1153755768 1.892723 5.839472e-02
-## beta1  0.7379571762 0.1142650123 6.458295 1.058891e-10
-## shape  4.6587428430 1.8397543707 2.532264 1.133288e-02</code></pre>
+## omega  0.0003206885 0.0002461107 1.303026 1.925660e-01
+## alpha1 0.2176477939 0.1153437061 1.886950 5.916707e-02
+## beta1  0.7380822027 0.1148736621 6.425165 1.317269e-10
+## shape  4.6583720654 1.8349194824 2.538734 1.112544e-02</code></pre>
 </div>
 <div id="factom-fct.-var-qq-plot-acf" class="section level2">
 <h2>Factom (FCT). VaR, QQ-plot, ACF</h2>
 <p><img src="/post/2018-01-30-crypto-dependencies_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <pre><code>##             Estimate   Std. Error    t value    Pr(&gt;|t|)
-## ma1    -0.1691165253 0.0726653414 -2.3273341 0.019947491
-## omega   0.0005596364 0.0006010796  0.9310521 0.351826616
-## alpha1  0.1287431287 0.0766973673  1.6785860 0.093232753
-## beta1   0.8290099354 0.0960948030  8.6270007 0.000000000
-## shape   4.8936419427 1.7744351226  2.7578590 0.005818128</code></pre>
+## ma1    -0.1685555132 0.0726809523 -2.3191154 0.020388782
+## omega   0.0005450237 0.0005878899  0.9270847 0.353882545
+## alpha1  0.1282298068 0.0761749447  1.6833594 0.092305544
+## beta1   0.8308220631 0.0948548357  8.7588794 0.000000000
+## shape   4.8452805711 1.7413602240  2.7824688 0.005394704</code></pre>
 </div>
 <div id="feathercoin-ftc.-var-qq-plot-acf" class="section level2">
 <h2>FeatherCoin (FTC). VaR, QQ-plot, ACF</h2>
 <p><img src="/post/2018-01-30-crypto-dependencies_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 <pre><code>##            Estimate  Std. Error   t value     Pr(&gt;|t|)
-## ar1     0.658806903 0.234511992  2.809267 0.0049654380
-## ma1    -0.728255024 0.206861278 -3.520499 0.0004307348
-## omega   0.004652177 0.003121506  1.490363 0.1361287503
-## alpha1  0.111545352 0.080080182  1.392921 0.1636437377
-## beta1   0.595200481 0.222225373  2.678364 0.0073982730
-## shape   3.956799847 1.145277828  3.454882 0.0005505335</code></pre>
+## ar1     0.658802307 0.232512748  2.833403 0.0046055289
+## ma1    -0.728564957 0.204926470 -3.555251 0.0003776190
+## omega   0.004651182 0.003133549  1.484317 0.1377247383
+## alpha1  0.111659486 0.080253327  1.391338 0.1641230228
+## beta1   0.595352578 0.223020127  2.669502 0.0075963920
+## shape   3.934153253 1.134993869  3.466233 0.0005278056</code></pre>
 </div>
 <div id="gno.-var-qq-plot-acf" class="section level2">
 <h2>GNO. VaR, QQ-plot, ACF</h2>
 <p><img src="/post/2018-01-30-crypto-dependencies_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
-<pre><code>##             Estimate   Std. Error    t value     Pr(&gt;|t|)
-## ar1     0.3377504244 0.2477954642  1.3630210 0.1728758885
-## ma1    -0.4647891977 0.2294021353 -2.0260892 0.0427556407
-## omega   0.0002596542 0.0003387173  0.7665809 0.4433307241
-## alpha1  0.0327837874 0.0248952712  1.3168681 0.1878828557
-## beta1   0.9513155572 0.0310292339 30.6586866 0.0000000000
-## shape   3.5488396693 0.9218580691  3.8496595 0.0001182821</code></pre>
+<pre><code>##             Estimate  Std. Error    t value     Pr(&gt;|t|)
+## ar1     0.3396271463 0.247025880  1.3748646 0.1691734159
+## ma1    -0.4667176495 0.228501759 -2.0425123 0.0411007419
+## omega   0.0002569801 0.000335588  0.7657607 0.4438186733
+## alpha1  0.0335413342 0.025192572  1.3313978 0.1830581560
+## beta1   0.9508838308 0.030673684 30.9999881 0.0000000000
+## shape   3.5314998649 0.911919532  3.8726003 0.0001076803</code></pre>
 </div>
 <div id="gnt.-var-qq-plot-acf" class="section level2">
 <h2>GNT. VaR, QQ-plot, ACF</h2>
@@ -465,70 +465,70 @@
 <h2>LTC. VaR, QQ-plot, ACF</h2>
 <p><img src="/post/2018-01-30-crypto-dependencies_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
 <pre><code>##             Estimate   Std. Error   t value     Pr(&gt;|t|)
-## ma1    -0.1209254699 0.0693690345 -1.743220 8.129524e-02
-## omega   0.0007017983 0.0005451443  1.287363 1.979680e-01
-## alpha1  0.1608562394 0.1079582822  1.489985 1.362281e-01
-## beta1   0.7728492130 0.0991581229  7.794109 6.439294e-15
-## shape   3.1016218180 0.6882708911  4.506397 6.593770e-06</code></pre>
+## ma1    -0.1210192361 0.0692236346 -1.748236 8.042320e-02
+## omega   0.0006867727 0.0005362795  1.280625 2.003255e-01
+## alpha1  0.1620491090 0.1085729986  1.492536 1.355587e-01
+## beta1   0.7739688061 0.0984683606  7.860076 3.774758e-15
+## shape   3.0933749700 0.6821564740  4.534700 5.768542e-06</code></pre>
 </div>
 <div id="str.-var-qq-plot-acf" class="section level2">
 <h2>STR. VaR, QQ-plot, ACF</h2>
 <p><img src="/post/2018-01-30-crypto-dependencies_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
 <pre><code>##             Estimate   Std. Error       t value   Pr(&gt;|t|)
-## ma1    -1.243942e-01 8.342260e-02 -1.491133e+00 0.13592652
-## omega   2.572345e-06 5.377125e-05  4.783867e-02 0.96184482
-## alpha1  5.804874e-10 2.232029e-03  2.600717e-07 0.99999979
-## beta1   9.989999e-01 1.836496e-03  5.439707e+02 0.00000000
-## shape   9.953294e+00 5.922462e+00  1.680601e+00 0.09284049</code></pre>
+## ma1    -1.243875e-01 8.347797e-02 -1.490064e+00 0.13620750
+## omega   2.139433e-06 5.071405e-05  4.218621e-02 0.96635026
+## alpha1  1.332783e-09 2.198089e-03  6.063368e-07 0.99999952
+## beta1   9.990000e-01 1.809155e-03  5.521914e+02 0.00000000
+## shape   9.888038e+00 5.959970e+00  1.659075e+00 0.09710064</code></pre>
 </div>
 <div id="vtc.-var-qq-plot-acf" class="section level2">
 <h2>VTC. VaR, QQ-plot, ACF</h2>
 <p><img src="/post/2018-01-30-crypto-dependencies_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
 <pre><code>##            Estimate   Std. Error      t value   Pr(&gt;|t|)
-## omega  2.083019e-11 4.905294e-05 4.246470e-07 0.99999966
-## alpha1 1.115854e-02 9.977300e-03 1.118393e+00 0.26339924
-## beta1  9.857784e-01 9.523654e-03 1.035084e+02 0.00000000
-## shape  9.203733e+00 5.144700e+00 1.788973e+00 0.07361909</code></pre>
+## omega  4.895098e-12 4.714158e-05 1.038382e-07 0.99999992
+## alpha1 1.301621e-02 1.019295e-02 1.276982e+00 0.20160872
+## beta1  9.837249e-01 9.852062e-03 9.984965e+01 0.00000000
+## shape  8.828378e+00 4.758362e+00 1.855340e+00 0.06354775</code></pre>
 </div>
 <div id="wng.-var-qq-plot-acf" class="section level2">
 <h2>WNG. VaR, QQ-plot, ACF</h2>
 <p><img src="/post/2018-01-30-crypto-dependencies_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
-<pre><code>##           Estimate   Std. Error    t value    Pr(&gt;|t|)
-## ma1    -0.17058695 0.0860802952 -1.9817190 0.047510704
-## omega   0.00015133 0.0002007762  0.7537248 0.451014497
-## alpha1  0.04167288 0.0237565901  1.7541610 0.079402926
-## beta1   0.94770711 0.0311487621 30.4251933 0.000000000
-## shape   4.43883461 1.3996780868  3.1713254 0.001517451</code></pre>
+<pre><code>##             Estimate   Std. Error    t value    Pr(&gt;|t|)
+## ma1    -0.1702488657 0.0861565082 -1.9760418 0.048150038
+## omega   0.0001532743 0.0002012671  0.7615466 0.446330635
+## alpha1  0.0418778985 0.0238854079  1.7532838 0.079553307
+## beta1   0.9472472322 0.0312725567 30.2900477 0.000000000
+## shape   4.4390340597 1.3974818650  3.1764520 0.001490885</code></pre>
 </div>
 <div id="xmr.-var-qq-plot-acf" class="section level2">
 <h2>XMR. VaR, QQ-plot, ACF</h2>
 <p><img src="/post/2018-01-30-crypto-dependencies_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
-<pre><code>##             Estimate  Std. Error    t value     Pr(&gt;|t|)
-## ma1    -0.1597008030 0.064718933 -2.4676056 1.360201e-02
-## omega   0.0001367714 0.000216257  0.6324482 5.270941e-01
-## alpha1  0.1116783515 0.060300426  1.8520325 6.402115e-02
-## beta1   0.8873216441 0.067412217 13.1626236 0.000000e+00
-## shape   3.5496684333 0.854070714  4.1561763 3.236182e-05</code></pre>
+<pre><code>##             Estimate   Std. Error    t value     Pr(&gt;|t|)
+## ma1    -0.1593617427 0.0646029440 -2.4667876 1.363312e-02
+## omega   0.0001368362 0.0002156957  0.6343947 5.258233e-01
+## alpha1  0.1114294105 0.0604008619  1.8448315 6.506206e-02
+## beta1   0.8875705846 0.0672902222 13.1901866 0.000000e+00
+## shape   3.5315048344 0.8456513806  4.1760765 2.965802e-05</code></pre>
 </div>
 <div id="xrp.-var-qq-plot-acf" class="section level2">
 <h2>XRP. VaR, QQ-plot, ACF</h2>
 <p><img src="/post/2018-01-30-crypto-dependencies_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
 <pre><code>##             Estimate   Std. Error   t value     Pr(&gt;|t|)
-## ma1    -0.1434701904 0.0588400183 -2.438310 1.475612e-02
-## omega   0.0001427361 0.0001316798  1.083963 2.783811e-01
-## alpha1  0.0518400267 0.0317693357  1.631763 1.027294e-01
-## beta1   0.9471599124 0.0305249536 31.029037 0.000000e+00
-## shape   2.6338742261 0.4553116114  5.784773 7.261040e-09</code></pre>
+## ma1    -0.1431824274 0.0589017334 -2.430870 1.506264e-02
+## omega   0.0001434886 0.0001314905  1.091247 2.751643e-01
+## alpha1  0.0530565518 0.0327413418  1.620476 1.051301e-01
+## beta1   0.9459433696 0.0306915444 30.820977 0.000000e+00
+## shape   2.6382848936 0.4578462844  5.762381 8.293534e-09</code></pre>
 </div>
 <div id="zec.-var-qq-plot-acf" class="section level2">
 <h2>ZEC. VaR, QQ-plot, ACF</h2>
 <p><img src="/post/2018-01-30-crypto-dependencies_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
 <pre><code>##             Estimate   Std. Error   t value   Pr(&gt;|t|)
-## ma1    -0.0860854387 0.0737060355 -1.167956 0.24282434
-## omega   0.0003375989 0.0003142525  1.074292 0.28269184
-## alpha1  0.0910231979 0.0635029160  1.433370 0.15175202
-## beta1   0.8558489379 0.0859293081  9.959919 0.00000000
-## shape   6.0706853652 2.7856186186  2.179295 0.02930974</code></pre>
+## ma1    -0.0864865986 0.0735921643 -1.175215 0.23990880
+## omega   0.0003345458 0.0003121849  1.071627 0.28388756
+## alpha1  0.0904858185 0.0631773488  1.432251 0.15207201
+## beta1   0.8567058542 0.0856769170  9.999261 0.00000000
+## shape   5.9958758256 2.7205166150  2.203948 0.02752804</code></pre>
 </div>
 </div>
 
@@ -670,21 +670,21 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1521321818"></script>
-    <script src="/js/perfect-scrollbar.min.js?1521321818"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1521321818"></script>
-    <script src="/js/jquery.sticky.js?1521321818"></script>
-    <script src="/js/featherlight.min.js?1521321818"></script>
-    <script src="/js/html5shiv-printshiv.min.js?1521321818"></script>
-    <script src="/js/highlight.pack.js?1521321818"></script>
+    <script src="/js/clipboard.min.js?1521322730"></script>
+    <script src="/js/perfect-scrollbar.min.js?1521322730"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1521322730"></script>
+    <script src="/js/jquery.sticky.js?1521322730"></script>
+    <script src="/js/featherlight.min.js?1521322730"></script>
+    <script src="/js/html5shiv-printshiv.min.js?1521322730"></script>
+    <script src="/js/highlight.pack.js?1521322730"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom.71422.js?1521321818"></script>
-    <script src="/js/learn.js?1521321818"></script>
-    <script src="/js/hugo-learn.js?1521321818"></script>
+    <script src="/js/modernizr.custom.71422.js?1521322730"></script>
+    <script src="/js/learn.js?1521322730"></script>
+    <script src="/js/hugo-learn.js?1521322730"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
-    <link href="/mermaid/mermaid.css?1521321818" type="text/css" rel="stylesheet" />
-    <script src="/mermaid/mermaid.js?1521321818"></script>
+    <link href="/mermaid/mermaid.css?1521322730" type="text/css" rel="stylesheet" />
+    <script src="/mermaid/mermaid.js?1521322730"></script>
     <script>
         mermaid.initialize({ startOnLoad: true });
     </script>
