@@ -20,7 +20,7 @@
       <description>Analysis based on data available at 2018-03-17 01:00:00Note: data is random, anytrading strategies that
 Marginal Log-ReturnsHere is descriptive analysis of historical returns. See mean, median, min and max value for each cryptocurrency from 2017-08-29 02:00:00 to 2018-03-17 01:00:00:
 The historical means of the data are the following:
-## BCH BTC DCR ETC ETH FCT FTC GNO LTC NEO ## 0.003 0.003 0.002 0.000 0.002 -0.001 0.007 -0.004 0.</description>
+## BCH BTC DCR ETC ETH FCT FTC GNO LTC NEO ## 0.003 0.003 0.002 0.000 0.002 -0.002 0.007 -0.004 0.</description>
     </item>
     
     <item>
@@ -49,6 +49,17 @@ The historical means of the data are the following:
       
       <guid>/2015/01/01/lorem-ipsum/</guid>
       <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</description>
+    </item>
+    
+    <item>
+      <title>trial</title>
+      <link>/1/01/01/trial/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/1/01/01/trial/</guid>
+      <description>R MarkdownThis is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
+When you click the Knit button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+summary(cars)## speed dist ## Min.</description>
     </item>
     
   </channel>
