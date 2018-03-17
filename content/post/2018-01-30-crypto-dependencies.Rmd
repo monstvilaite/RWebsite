@@ -1,5 +1,5 @@
 ---
-title: "Predict cryptos with ARMA GARCH and r-vine"
+title: "Cryptocurrency portfolio Value-at-Risk"
 author: "Monika Monstvilaite"
 date: 2017-07-23T21:13:14-05:00
 categories: ["R"]
@@ -7,7 +7,6 @@ tags: ["R Markdown", "plot", "regression"]
 ---
 
 ```{r setup, include=FALSE}
-
 #install.packages("dplyr")
 library(ggplot2)
 library(plyr)
