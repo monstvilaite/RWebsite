@@ -207,7 +207,7 @@ We present the results we obtained in our simulations in graphs:
 ![Scenario 1: 1(a)+2(a)+3(a)](/RotaVaccine/IMScenario1.jpg){width=250px} ![](/RotaVaccine/ISScenario1.jpg){width=250px}
 
 
-![Scenario 2: 1(b)+2(a)+3(a)](/RotaVaccine/IMScenario2.jpg){width=250px} ![](/RotaVaccine/ISScenario2.jpg){width=250px}
+![Scenario 2: 1(b)+2(a)+3(a)](/RotaVaccine/IMScenario2.jpg){width=250px} ![Scenario 2: 1(b)+2(a)+3(a)](/RotaVaccine/ISScenario2.jpg){width=250px}
 
 ![Scenario 3: 1(a)+2(b)+3(a)](/RotaVaccine/IMScenario3.jpg){width=250px} ![](/RotaVaccine/ISScenario3.jpg){width=250px}
 
