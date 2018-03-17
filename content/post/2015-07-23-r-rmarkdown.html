@@ -129,7 +129,14 @@ $(document).ready(function () {
 <p>Rotavirus is a childhood disease and the leading cause of severe diarrhea in children aged less than five years. This infection is associated with significant mortality in developing countries and high financial burdens worldwide. The incubation time of rotavirus is around 2 days while severe symptoms last for approximately 4-8 days <span class="citation">(“Rotavirus | About Rotavirus | CDC” 2015)</span>. The median age at the primary rotavirus infection ranges from six to nine months in low income countries, while in high income countries the first episode may occasionally be delayed until the age of two to five years; the majority of incidences however, still occurs in infancy. Children, even those that are vaccinated, may develop rotavirus disease more than once. That is because neither natural infection with rotavirus nor rotavirus vaccination provides full immunity (protection) from future infections. Usually a person’s first infection with rotavirus causes the most severe symptoms <span class="citation">(“Rotavirus | About Rotavirus | CDC” 2015)</span>.</p>
 <p>According to World Health Organization (WHO), in 2008 approximately 453 000 rotavirus gastroenteritis (RVGE-)associated child deaths occurred worldwide. These fatalities accounted for about 5 % of all child deaths and a cause-specific mortality rate of 86 deaths per 100 000 population aged less than 5 years <span class="citation">(Parashar et al. 2003)</span>. Furthermore, in a recent report of hospital-based rotavirus surveillance from 35 nations representing each of the 6 WHO Regions and different economic levels, an average of 40<span class="math inline">\(\%\)</span> of hospitalizations for diarrhea among children younger than 5 years were because of rotavirus infection <span class="citation">(WHO – World Health Organization 2008)</span>.</p>
 <p>In Sweden, which is a high income country, rotavirus causes low mortality but still significant financial burdens because of hospitalization of children and parents staying at home to look after the sick children. The yearly burden of disease in Sweden is estimated to be 2 100 children under the age of five admitted to hospital, 3 700 visits to the emergency room, 14 000 visits to primary care clinics and 30 000 children treated at home where a reporting rate of 6 % is assumed. Vaccination is considered the most effective public health measure for reducing the disease burden of rotavirus. Currently, there are two types of vaccines, RotaTeq (Merck <span class="math inline">\(\&amp;\)</span> Co., Inc.) and Rotarix (GSK Biologicals). The first is administrated as a 3-dose oral series beginning at 6-12 weeks of age followed at 4- to 10-week intervals by subsequent doses, while the second in a 2-dose schedule given from age of 6 weeks up to 24 weeks, with a 4-10 week interval between each dose. In the US, both RotaTeq and Rotarix are already licensed for routine use to prevent severe RVGE in infants and children. In Europe, only a few countries have introduced national vaccination programs, among them Germany, Finland, Belgium and Luxemburg <span class="citation">(Atkins et al. 2012)</span>. In the following we want to investigate the impact of an possible introduction of rotavirus vaccination for children in Sweden.</p>
-
+<!--
+\begin{figure}[H]
+\begin{center}
+\includegraphics[scale=0.5]{image.jpg}
+\caption{Transmission electron micrograph of intact rotavirus particles [@web]}
+\end{center}
+\end{figure}
+-->
 
 <p>Our goal is to create a model that could be used to assess the implementation of a national rotavirus childhood vaccination in Sweden and to apply the model to estimate the yearly number of cases after vaccination for the next 10 years.</p>
 <p>Important aspects that have to be included into the model are:</p>
@@ -158,7 +165,7 @@ Hence, we obtain for the death rate the following relationship
 <span class="math display">\[\begin{equation}
 \mu = \frac{f}{N_3}N
 \end{equation}\]</span>
-<p>with <span class="math inline">\(N_3\)</span> being the number of individuals in the oldest age group. Since the population size of Sweden is large (approx. 9.5 M) we used a deterministic model to explain Rotavirus transmission because we assumed that for a large number the stochastic system approaches the deterministic system. The conceptual description of the model can be represented by a flow diagram, see Figure . Once infected, the diseases can follow either a severe or mild course with probability <span class="math inline">\(\sigma_i\)</span> or 1-<span class="math inline">\(\sigma_i\)</span> respectively. Since the severe infections mostly occur in the youngest or oldest age group we chose this parameter to be age dependent. The force of infection <span class="math inline">\(\lambda_i(t)\)</span> is the per capita rate at which susceptible become infected. Susceptible individuals from age group <span class="math inline">\(i\)</span> have a susceptibility of <span class="math inline">\(b_i\)</span> and can become infected either by being infected by an infectious from age group 1, 2 or 3. The contact-matrix <span class="math inline">\(C \in \mathcal{R}^{3\times 3}\)</span> is taken from the European POLYMOD study <span class="citation">(Mossong et al. 2008)</span> for Finland, since it was the only Nordic country in the study. Since rotavirus is a seasonal disease peaking in winter we included a seasonal forcing which is also used in <span class="citation">(Atkins et al. 2012)</span>. Putting this together we obtain a force of infection as:</p>
+<p>with <span class="math inline">\(N_3\)</span> being the number of individuals in the oldest age group. Since the population size of Sweden is large (approx. 9.5 M) we used a deterministic model to explain Rotavirus transmission because we assumed that for a large number the stochastic system approaches the deterministic system. The conceptual description of the model can be represented by a flow diagram, see Figure <!--\ref{mod}-->. Once infected, the diseases can follow either a severe or mild course with probability <span class="math inline">\(\sigma_i\)</span> or 1-<span class="math inline">\(\sigma_i\)</span> respectively. Since the severe infections mostly occur in the youngest or oldest age group we chose this parameter to be age dependent. The force of infection <span class="math inline">\(\lambda_i(t)\)</span> is the per capita rate at which susceptible become infected. Susceptible individuals from age group <span class="math inline">\(i\)</span> have a susceptibility of <span class="math inline">\(b_i\)</span> and can become infected either by being infected by an infectious from age group 1, 2 or 3. The contact-matrix <span class="math inline">\(C \in \mathcal{R}^{3\times 3}\)</span> is taken from the European POLYMOD study <span class="citation">(Mossong et al. 2008)</span> for Finland, since it was the only Nordic country in the study. Since rotavirus is a seasonal disease peaking in winter we included a seasonal forcing which is also used in <span class="citation">(Atkins et al. 2012)</span>. Putting this together we obtain a force of infection as:</p>
 <p>2 where <span class="math inline">\(\rho\)</span> is the assumed reduction of infectiousness for a mild case in comparison to a severe case, <span class="math inline">\(\theta\)</span> denotes the offset in transmission and <span class="math inline">\(A\)</span> is the seasonal transmission amplitude. The mean time individuals stay severely or mildly infectious is <span class="math inline">\(1/\gamma_S\)</span> and <span class="math inline">\(1/\gamma_M\)</span> respectively. We assume that recovered individuals loose immunity with a rate <span class="math inline">\(\varepsilon\)</span> which is age independent. After loss of immunity the individual returns to a state of fully susceptibility again. We chose the simulation interval to be daily.</p>
 
 <p>At time t=0 the government decides for a mandatory vaccination of children in the first age group (only one dose). From that time point, the fraction <span class="math inline">\(\phi\)</span> (vaccination coverage) of all newborn children receive the vaccine, while the remaining <span class="math inline">\((1-\phi)\)</span> fraction of children being born at the same time point are assumed to be fully susceptible. We ignore a protection by maternal antibodies during the first month after birth and for reasons of simplicity we assume that children are either vaccinated or not-vaccinated in contrast to reality where, dependent on the vaccine, either two or three doses are necessary for a good protection. A good justification for this simplification is the fact that 98.74 <span class="math inline">\(\%\)</span> <span class="citation">(Atkins et al. 2012)</span> of all infants receiving the first vaccine dose will also receive the second and the third (if there is one depending on the vaccine type).</p>
@@ -251,19 +258,19 @@ Hence, we obtain for the death rate the following relationship
 <td><span class="citation">(Atkins et al. 2012)</span></td>
 </tr>
 <tr class="odd">
-<td><span class="math inline">\(i=1\)</span></td>
+<td><span class="math inline">\(\quad i=1\)</span></td>
 <td></td>
 <td>0.06</td>
 <td></td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(i=2\)</span></td>
+<td><span class="math inline">\(\quad i=2\)</span></td>
 <td></td>
 <td>0.003</td>
 <td></td>
 </tr>
 <tr class="odd">
-<td><span class="math inline">\(i=3\)</span></td>
+<td><span class="math inline">\(\quad i=3\)</span></td>
 <td></td>
 <td>0.025</td>
 <td></td>
@@ -311,13 +318,13 @@ Hence, we obtain for the death rate the following relationship
 <td>calibrated</td>
 </tr>
 <tr class="odd">
-<td><span class="math inline">\(i=1\)</span></td>
+<td><span class="math inline">\(\quad i=1\)</span></td>
 <td></td>
 <td>1/(4<span class="math inline">\(\cdot\)</span> 365)</td>
 <td></td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(i=2\)</span></td>
+<td><span class="math inline">\(\quad i=2\)</span></td>
 <td></td>
 <td>1/(60<span class="math inline">\(\cdot\)</span> 365)</td>
 <td></td>
@@ -365,19 +372,19 @@ Hence, we obtain for the death rate the following relationship
 <td><span class="citation">(Atkins et al. 2012)</span></td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(i=1\)</span></td>
+<td><span class="math inline">\(\quad i=1\)</span></td>
 <td></td>
 <td>0.24</td>
 <td></td>
 </tr>
 <tr class="odd">
-<td><span class="math inline">\(i=2\)</span></td>
+<td><span class="math inline">\(\quad i=2\)</span></td>
 <td></td>
 <td>0.015</td>
 <td></td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(i=3\)</span></td>
+<td><span class="math inline">\(\quad i=3\)</span></td>
 <td></td>
 <td>0.015</td>
 <td></td>
@@ -389,19 +396,19 @@ Hence, we obtain for the death rate the following relationship
 <td>calibrated</td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(i=1\)</span></td>
+<td><span class="math inline">\(\quad i=1\)</span></td>
 <td></td>
 <td>1/3</td>
 <td></td>
 </tr>
 <tr class="odd">
-<td><span class="math inline">\(i=2\)</span></td>
+<td><span class="math inline">\(\quad i=2\)</span></td>
 <td></td>
 <td>1/3</td>
 <td></td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(i=3\)</span></td>
+<td><span class="math inline">\(\quad i=3\)</span></td>
 <td></td>
 <td>1/3</td>
 <td></td>
