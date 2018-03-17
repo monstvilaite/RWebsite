@@ -1,5 +1,5 @@
 ---
-title: "Sweden Vaccination"
+title: "Rotavirus childhood vaccination in Sweden"
 author: "Monika Monstvilaite, Theresa Stocks, Angeliki Maraki"
 date: 2015-07-23T21:13:14-05:00
 categories: ["R"]
