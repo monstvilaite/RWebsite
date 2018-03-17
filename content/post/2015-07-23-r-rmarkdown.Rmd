@@ -22,15 +22,7 @@ Vaccination is considered the most effective public health measure for reducing 
 In the US, both RotaTeq and Rotarix are already licensed for routine use to prevent severe RVGE in infants and children. In Europe, only a few countries have introduced national vaccination programs, among them Germany, Finland, Belgium and Luxemburg [@vac]. 
 In the following we want to investigate the impact of an possible introduction of rotavirus vaccination for children in Sweden.
 
-![Transmission electron micrograph of intact rotavirus particles [@web]](RotaVaccine\Rota2.PNG){width=300px}
-<!--
-\begin{figure}[H]
-\begin{center}
-\includegraphics[scale=0.5]{image.jpg}
-\caption{Transmission electron micrograph of intact rotavirus particles [@web]}
-\end{center}
-\end{figure}
--->
+![Transmission electron micrograph of intact rotavirus particles](img/RotaVaccine/Rota2.PNG){width=300px}
 
 
 \section{Problem statement}
@@ -94,15 +86,7 @@ We chose the simulation interval to be daily.
 Moreover, our model accounts for waning of vaccine immunity. An individual of age group $i$ is protected by the vaccine for a mean time of  $1/\tau$ weeks before returning to fully susceptibility again. The vaccine is assumed to not be perfect, but having a efficacy for mild infection of $\eta_M$ and  for severe infection of $\eta_S$ . Hence vaccinated individuals can be infected with rate $\lambda_i(1-\eta_S)(1-\sigma_i)$ and $\lambda_i(1-\eta_S)\sigma_i$ respectively. As in the baseline model, the vaccinated individuals age into an older age compartment with rate $\delta_i$ and die in the oldest age group with rate $\mu$.
 
 
-![Schematic representation of the model](RotaVaccine\Rota1.PNG){width=250px}
-<!--   
-\begin{figure}[H]
-\begin{center}
-\includegraphics[scale=0.5]{mod.png}
-\caption{Schematic representation of the model} \label{mod}
-\end{center}
-\end{figure}
--->
+![Schematic representation of the model](/static/img/RotaVaccine/Rota1.PNG){width=250px}
 
 The following shows ODE system which describes the model. In black is the baseline model and vaccination is highlighted in blue.
 
@@ -217,9 +201,9 @@ Since the data was very sparse, our calibration is very rough and should only be
 
 We present the results we obtained in our simulations in graphs:
 
-![(Baseline) Scenario: No Vaccination](RotaVaccine\IMbV.jpg){width=250px} ![](RotaVaccine\ISbV.jpg){width=250px}
+![(Baseline) Scenario: No Vaccination](/RotaVaccine/IMbV.jpg){width=250px} ![](RotaVaccine\ISbV.jpg){width=250px}
 
-![Scenario 1: 1(a)+2(a)+3(a)](RotaVaccine\IMScenario1.jpg){width=250px} ![](RotaVaccine\ISScenario1.jpg){width=250px}
+![Scenario 1: 1(a)+2(a)+3(a)](RotaVaccine/IMScenario1.jpg){width=250px} ![](RotaVaccine/ISScenario1.jpg){width=250px}
 
 
 ![Scenario 2: 1(b)+2(a)+3(a)](RotaVaccine\IMScenario2.jpg){width=250px} ![](RotaVaccine\ISScenario2.jpg){width=250px}

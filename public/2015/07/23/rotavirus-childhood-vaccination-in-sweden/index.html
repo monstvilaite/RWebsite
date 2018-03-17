@@ -12,17 +12,17 @@
     <title>Rotavirus childhood vaccination in Sweden :: A Hugo website</title>
     
     
-    <link href="/css/nucleus.css?1521320406" rel="stylesheet">
-    <link href="/css/font-awesome.min.css?1521320406" rel="stylesheet">
-    <link href="/css/hybrid.css?1521320406" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1521320406" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1521320406" rel="stylesheet">
-    <link href="/css/auto-complete.css?1521320406" rel="stylesheet">
-    <link href="/css/theme.css?1521320406" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1521320406" rel="stylesheet">
+    <link href="/css/nucleus.css?1521321388" rel="stylesheet">
+    <link href="/css/font-awesome.min.css?1521321388" rel="stylesheet">
+    <link href="/css/hybrid.css?1521321388" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1521321388" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1521321388" rel="stylesheet">
+    <link href="/css/auto-complete.css?1521321388" rel="stylesheet">
+    <link href="/css/theme.css?1521321388" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1521321388" rel="stylesheet">
     
 
-    <script src="/js/jquery-2.x.min.js?1521320406"></script>
+    <script src="/js/jquery-2.x.min.js?1521321388"></script>
     
     <style type="text/css">
       :root #header + #content > #left > #rlblock_left{ 
@@ -67,14 +67,14 @@
     <span data-search-clear=""><i class="fa fa-close"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1521320406"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1521320406"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1521321388"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1521321388"></script>
 <script type="text/javascript">
     
         var baseurl = '\/';
     
 </script>
-<script type="text/javascript" src="/js/search.js?1521320406"></script>
+<script type="text/javascript" src="/js/search.js?1521321388"></script>
 
     
   </div>
@@ -272,14 +272,10 @@
 <p>Rotavirus is a childhood disease and the leading cause of severe diarrhea in children aged less than five years. This infection is associated with significant mortality in developing countries and high financial burdens worldwide. The incubation time of rotavirus is around 2 days while severe symptoms last for approximately 4-8 days <span class="citation">(“Rotavirus | About Rotavirus | CDC” 2015)</span>. The median age at the primary rotavirus infection ranges from six to nine months in low income countries, while in high income countries the first episode may occasionally be delayed until the age of two to five years; the majority of incidences however, still occurs in infancy. Children, even those that are vaccinated, may develop rotavirus disease more than once. That is because neither natural infection with rotavirus nor rotavirus vaccination provides full immunity (protection) from future infections. Usually a person’s first infection with rotavirus causes the most severe symptoms <span class="citation">(“Rotavirus | About Rotavirus | CDC” 2015)</span>.</p>
 <p>According to World Health Organization (WHO), in 2008 approximately 453 000 rotavirus gastroenteritis (RVGE-)associated child deaths occurred worldwide. These fatalities accounted for about 5 % of all child deaths and a cause-specific mortality rate of 86 deaths per 100 000 population aged less than 5 years <span class="citation">(Parashar et al. 2003)</span>. Furthermore, in a recent report of hospital-based rotavirus surveillance from 35 nations representing each of the 6 WHO Regions and different economic levels, an average of 40% of hospitalizations for diarrhea among children younger than 5 years were because of rotavirus infection <span class="citation">(WHO – World Health Organization 2008)</span>.</p>
 <p>In Sweden, which is a high income country, rotavirus causes low mortality but still significant financial burdens because of hospitalization of children and parents staying at home to look after the sick children. The yearly burden of disease in Sweden is estimated to be 2 100 children under the age of five admitted to hospital, 3 700 visits to the emergency room, 14 000 visits to primary care clinics and 30 000 children treated at home where a reporting rate of 6 % is assumed. Vaccination is considered the most effective public health measure for reducing the disease burden of rotavirus. Currently, there are two types of vaccines, RotaTeq (Merck <span class="math inline">\(\&amp;\)</span> Co., Inc.) and Rotarix (GSK Biologicals). The first is administrated as a 3-dose oral series beginning at 6-12 weeks of age followed at 4- to 10-week intervals by subsequent doses, while the second in a 2-dose schedule given from age of 6 weeks up to 24 weeks, with a 4-10 week interval between each dose. In the US, both RotaTeq and Rotarix are already licensed for routine use to prevent severe RVGE in infants and children. In Europe, only a few countries have introduced national vaccination programs, among them Germany, Finland, Belgium and Luxemburg <span class="citation">(Atkins et al. 2012)</span>. In the following we want to investigate the impact of an possible introduction of rotavirus vaccination for children in Sweden.</p>
-<p><img src="RotaVaccine/Rota2.PNG" alt="Transmission electron micrograph of intact rotavirus particles (???)" width="300" /> <!--
-\begin{figure}[H]
-\begin{center}
-\includegraphics[scale=0.5]{image.jpg}
-\caption{Transmission electron micrograph of intact rotavirus particles [@web]}
-\end{center}
-\end{figure}
---></p>
+<div class="figure">
+<img src="img/RotaVaccine/Rota2.PNG" alt="Transmission electron micrograph of intact rotavirus particles" width="300" />
+<p class="caption">Transmission electron micrograph of intact rotavirus particles</p>
+</div>
 
 <p>Our goal is to create a model that could be used to assess the implementation of a national rotavirus childhood vaccination in Sweden and to apply the model to estimate the yearly number of cases after vaccination for the next 10 years.</p>
 <p>Important aspects that have to be included into the model are:</p>
@@ -313,14 +309,10 @@ Hence, we obtain for the death rate the following relationship
 
 <p>At time t=0 the government decides for a mandatory vaccination of children in the first age group (only one dose). From that time point, the fraction <span class="math inline">\(\phi\)</span> (vaccination coverage) of all newborn children receive the vaccine, while the remaining <span class="math inline">\((1-\phi)\)</span> fraction of children being born at the same time point are assumed to be fully susceptible. We ignore a protection by maternal antibodies during the first month after birth and for reasons of simplicity we assume that children are either vaccinated or not-vaccinated in contrast to reality where, dependent on the vaccine, either two or three doses are necessary for a good protection. A good justification for this simplification is the fact that 98.74 % <span class="citation">(Atkins et al. 2012)</span> of all infants receiving the first vaccine dose will also receive the second and the third (if there is one depending on the vaccine type).</p>
 <p>Moreover, our model accounts for waning of vaccine immunity. An individual of age group <span class="math inline">\(i\)</span> is protected by the vaccine for a mean time of <span class="math inline">\(1/\tau\)</span> weeks before returning to fully susceptibility again. The vaccine is assumed to not be perfect, but having a efficacy for mild infection of <span class="math inline">\(\eta_M\)</span> and for severe infection of <span class="math inline">\(\eta_S\)</span> . Hence vaccinated individuals can be infected with rate <span class="math inline">\(\lambda_i(1-\eta_S)(1-\sigma_i)\)</span> and <span class="math inline">\(\lambda_i(1-\eta_S)\sigma_i\)</span> respectively. As in the baseline model, the vaccinated individuals age into an older age compartment with rate <span class="math inline">\(\delta_i\)</span> and die in the oldest age group with rate <span class="math inline">\(\mu\)</span>.</p>
-<p><img src="RotaVaccine/Rota1.PNG" alt="Schematic representation of the model" width="250" /> <!--   
-\begin{figure}[H]
-\begin{center}
-\includegraphics[scale=0.5]{mod.png}
-\caption{Schematic representation of the model} \label{mod}
-\end{center}
-\end{figure}
---></p>
+<div class="figure">
+<img src="/static/img/RotaVaccine/Rota1.PNG" alt="Schematic representation of the model" width="250" />
+<p class="caption">Schematic representation of the model</p>
+</div>
 <p>The following shows ODE system which describes the model. In black is the baseline model and vaccination is highlighted in blue.</p>
 <p><span class="math display">\[ 
 \begin{aligned}
@@ -631,7 +623,7 @@ Hence, we obtain for the death rate the following relationship
 <p>Since the data was very sparse, our calibration is very rough and should only be considered as a simulation study to give an idea of the dynamics of the epidemics but should by no means be taken as perfect mirror of reality.</p>
 
 <p>We present the results we obtained in our simulations in graphs:</p>
-<p><img src="RotaVaccine/IMbV.jpg" alt="(Baseline) Scenario: No Vaccination" width="250" /> <img src="RotaVaccine/ISbV.jpg" width="250" /></p>
+<p><img src="/RotaVaccine/IMbV.jpg" alt="(Baseline) Scenario: No Vaccination" width="250" /> <img src="RotaVaccine/ISbV.jpg" width="250" /></p>
 <p><img src="RotaVaccine/IMScenario1.jpg" alt="Scenario 1: 1(a)+2(a)+3(a)" width="250" /> <img src="RotaVaccine/ISScenario1.jpg" width="250" /></p>
 <p><img src="RotaVaccine/IMScenario2.jpg" alt="Scenario 2: 1(b)+2(a)+3(a)" width="250" /> <img src="RotaVaccine/ISScenario2.jpg" width="250" /></p>
 <p><img src="RotaVaccine/IMScenario3.jpg" alt="Scenario 3: 1(a)+2(b)+3(a)" width="250" /> <img src="RotaVaccine/ISScenario3.jpg" width="250" /></p>
@@ -804,21 +796,21 @@ Hence, we obtain for the death rate the following relationship
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1521320406"></script>
-    <script src="/js/perfect-scrollbar.min.js?1521320406"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1521320406"></script>
-    <script src="/js/jquery.sticky.js?1521320406"></script>
-    <script src="/js/featherlight.min.js?1521320406"></script>
-    <script src="/js/html5shiv-printshiv.min.js?1521320406"></script>
-    <script src="/js/highlight.pack.js?1521320406"></script>
+    <script src="/js/clipboard.min.js?1521321388"></script>
+    <script src="/js/perfect-scrollbar.min.js?1521321388"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1521321388"></script>
+    <script src="/js/jquery.sticky.js?1521321388"></script>
+    <script src="/js/featherlight.min.js?1521321388"></script>
+    <script src="/js/html5shiv-printshiv.min.js?1521321388"></script>
+    <script src="/js/highlight.pack.js?1521321388"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom.71422.js?1521320406"></script>
-    <script src="/js/learn.js?1521320406"></script>
-    <script src="/js/hugo-learn.js?1521320406"></script>
+    <script src="/js/modernizr.custom.71422.js?1521321388"></script>
+    <script src="/js/learn.js?1521321388"></script>
+    <script src="/js/hugo-learn.js?1521321388"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
-    <link href="/mermaid/mermaid.css?1521320406" type="text/css" rel="stylesheet" />
-    <script src="/mermaid/mermaid.js?1521320406"></script>
+    <link href="/mermaid/mermaid.css?1521321388" type="text/css" rel="stylesheet" />
+    <script src="/mermaid/mermaid.js?1521321388"></script>
     <script>
         mermaid.initialize({ startOnLoad: true });
     </script>
