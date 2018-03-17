@@ -15,13 +15,14 @@ Children, even those that are vaccinated, may develop rotavirus disease more tha
 immunity (protection) from future infections. Usually a person's first infection with rotavirus causes the most severe symptoms [@8the].
 
 According to World Health Organization (WHO), in 2008 approximately 453 000 rotavirus gastroenteritis (RVGE-)associated child deaths occurred worldwide. These fatalities accounted for about 5 \% of all child deaths and a cause-specific mortality rate of 86 deaths per 100 000 population aged less than 5 years [@DU].
-Furthermore, in a recent report of hospital-based rotavirus surveillance from 35 nations representing each of the 6 WHO Regions and different economic levels, an average of 40$\%$ of hospitalizations for diarrhea among children younger than 5 years were because of rotavirus infection [@47].
+Furthermore, in a recent report of hospital-based rotavirus surveillance from 35 nations representing each of the 6 WHO Regions and different economic levels, an average of 40\% of hospitalizations for diarrhea among children younger than 5 years were because of rotavirus infection [@47].
 
 In Sweden, which is a high income country, rotavirus causes low mortality but still significant financial burdens because of hospitalization of children and parents staying at home to look after the sick children.  The yearly burden of disease in Sweden is estimated to be 2 100 children under the age of five admitted to hospital, 3 700 visits to the emergency room, 14 000 visits to primary care clinics and 30 000 children treated at home where a reporting rate of 6 \% is assumed. 
 Vaccination is considered the most effective public health measure for reducing the disease burden of rotavirus. Currently, there are two types of vaccines, RotaTeq (Merck $\&$ Co., Inc.) and Rotarix (GSK Biologicals). The first is administrated as a 3-dose oral series beginning at 6-12 weeks of age followed at 4- to 10-week intervals by subsequent doses, while the second in a 2-dose schedule given from age of 6 weeks up to 24 weeks, with a 4-10 week interval between each dose.
 In the US, both RotaTeq and Rotarix are already licensed for routine use to prevent severe RVGE in infants and children. In Europe, only a few countries have introduced national vaccination programs, among them Germany, Finland, Belgium and Luxemburg [@vac]. 
 In the following we want to investigate the impact of an possible introduction of rotavirus vaccination for children in Sweden.
 
+![Transmission electron micrograph of intact rotavirus particles [@web]](RotaVaccine\Rota2.PNG){width=300px}
 <!--
 \begin{figure}[H]
 \begin{center}
@@ -88,10 +89,12 @@ We chose the simulation interval to be daily.
 
 \subsection*{Assumptions with vaccination :}
 
- At time t=0 the government decides for a mandatory vaccination of children in the first age group (only one dose). From that time point, the fraction $\phi$ (vaccination coverage) of all  newborn children receive the vaccine, while the remaining $(1-\phi)$ fraction of children being born at the same time point are assumed to be fully susceptible. We ignore a protection by maternal antibodies during the first month after birth and for reasons of simplicity we assume that children are either vaccinated or not-vaccinated in contrast to reality where, dependent on the vaccine, either two or three doses are necessary for a good protection. A good justification for this simplification is the fact that 98.74 $\%$ [@vac] of all infants receiving the first vaccine dose will also receive the second and the third (if there is one depending on the vaccine type).
+ At time t=0 the government decides for a mandatory vaccination of children in the first age group (only one dose). From that time point, the fraction $\phi$ (vaccination coverage) of all  newborn children receive the vaccine, while the remaining $(1-\phi)$ fraction of children being born at the same time point are assumed to be fully susceptible. We ignore a protection by maternal antibodies during the first month after birth and for reasons of simplicity we assume that children are either vaccinated or not-vaccinated in contrast to reality where, dependent on the vaccine, either two or three doses are necessary for a good protection. A good justification for this simplification is the fact that 98.74 \% [@vac] of all infants receiving the first vaccine dose will also receive the second and the third (if there is one depending on the vaccine type).
 
 Moreover, our model accounts for waning of vaccine immunity. An individual of age group $i$ is protected by the vaccine for a mean time of  $1/\tau$ weeks before returning to fully susceptibility again. The vaccine is assumed to not be perfect, but having a efficacy for mild infection of $\eta_M$ and  for severe infection of $\eta_S$ . Hence vaccinated individuals can be infected with rate $\lambda_i(1-\eta_S)(1-\sigma_i)$ and $\lambda_i(1-\eta_S)\sigma_i$ respectively. As in the baseline model, the vaccinated individuals age into an older age compartment with rate $\delta_i$ and die in the oldest age group with rate $\mu$.
 
+
+![Schematic representation of the model](RotaVaccine\Rota1.PNG){width=250px}
 <!--   
 \begin{figure}[H]
 \begin{center}
@@ -129,19 +132,19 @@ $$
 The following table contains the variables and parameters we have used for simulating the model:
 
 
-| Variables (at time $t$ and for age group $i$) | Explanation                             |
-|-----------------------------------------------|-----------------------------------------|
-| $S_i(t)$                                      | Number of susceptible individuals       |
-| $I_{Si}(t)$                                   | Number of severe infectious individuals |
-| $I_{Mi}(t)$                                   | Number of mild infectious individuals   |
-| $I_{Si}(t)$                                   | Number of mild infectious individuals   |
-| $R_{i}(t)$                                    | Number of recovered individuals         |
-| $V_{i}(t)$                                    | Number of vaccinated individuals        |
+| Variables (time $t$, age group $i$) | Explanation                             |
+|-------------------------------------|-----------------------------------------|
+| $S_i(t)$                            | Number of susceptible individuals       |
+| $I_{Si}(t)$                         | Number of severe infectious individuals |
+| $I_{Mi}(t)$                         | Number of mild infectious individuals   |
+| $I_{Si}(t)$                         | Number of mild infectious individuals   |
+| $R_{i}(t)$                          | Number of recovered individuals         |
+| $V_{i}(t)$                          | Number of vaccinated individuals        |
 
 
 
 | Parameter | Explanation | Value | Reference |
-|----------------|-----------------------------------------------------------|-------------------|------------|
+|----------------|-----------------------------------------------------|---------------|------------|
 | $A$ | seasonal transmission amplitude | 0.064 | [@vac] |
 | $b_i$ | Susceptibility of age group $i$ |  | [@vac] |
 | $\quad i=1$ |  | 0.06 |  |
@@ -214,101 +217,16 @@ Since the data was very sparse, our calibration is very rough and should only be
 
 We present the results we obtained in our simulations in graphs:
 
-<!-- 
-\begin{figure}[H]
-\centering
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=1\linewidth]{IMbV.jpg}
-  %\caption{A subfigure}
-  \label{fig:sub1}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=1\linewidth]{ISbV.jpg}
-  %\caption{A subfigure}
-  \label{fig:sub2}
-\end{subfigure}
-\caption{(Baseline) Scenario: No Vaccination}
-\label{fig:test}
-\end{figure}
+![(Baseline) Scenario: No Vaccination](RotaVaccine\IMbV.jpg){width=250px} ![](RotaVaccine\ISbV.jpg){width=250px}
+
+![Scenario 1: 1(a)+2(a)+3(a)](RotaVaccine\IMScenario1.jpg){width=250px} ![](RotaVaccine\ISScenario1.jpg){width=250px}
 
 
-\begin{figure}[H]
-\centering
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=1\linewidth]{IMScenario1.jpg}
-  %\caption{A subfigure}
-  \label{fig:sub1}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=1\linewidth]{ISScenario1.jpg}
-  %\caption{A subfigure}
-  \label{fig:sub2}
-\end{subfigure}
-\caption{Scenario 1: 1(a)+2(a)+3(a)}
-\label{fig:test}
-\end{figure}
+![Scenario 2: 1(b)+2(a)+3(a)](RotaVaccine\IMScenario2.jpg){width=250px} ![](RotaVaccine\ISScenario2.jpg){width=250px}
 
+![Scenario 3: 1(a)+2(b)+3(a)](RotaVaccine\IMScenario3.jpg){width=250px} ![](RotaVaccine\ISScenario3.jpg){width=250px}
 
-\begin{figure}[H]
-\centering
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=1\linewidth]{IMScenario2.jpg}
-  %\caption{A subfigure}
-  \label{fig:sub1}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=1\linewidth]{ISScenario2.jpg}
-  %\caption{A subfigure}
-  \label{fig:sub2}
-\end{subfigure}
-\caption{Scenario 2: 1(b)+2(a)+3(a)}
-\label{fig:test}
-\end{figure}
-
-
-\begin{figure}[H]
-\centering
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=1\linewidth]{IMScenario3.jpg}
-  %\caption{A subfigure}
-  \label{fig:sub1}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=1\linewidth]{ISScenario3.jpg}
-  %\caption{A subfigure}
-  \label{fig:sub2}
-\end{subfigure}
-\caption{Scenario 3: 1(a)+2(b)+3(a)}
-\label{fig:test}
-\end{figure}
-
-
-\begin{figure}[H]
-\centering
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=1\linewidth]{IMScenario4.jpg}
-  %\caption{A subfigure}
-  \label{fig:sub1}
-\end{subfigure}%
-\begin{subfigure}{.5\textwidth}
-  \centering
-  \includegraphics[width=1\linewidth]{ISScenario4.jpg}
-  %\caption{A subfigure}
-  \label{fig:sub2}
-\end{subfigure}
-\caption{Scenario 4: 1(a)+2(a)+3(b)}
-\label{fig:test}
-\end{figure}
--->
+![Scenario 4: 1(a)+2(a)+3(b)](RotaVaccine\IMScenario4.jpg){width=250px} ![](RotaVaccine\ISScenario4.jpg){width=250px}
 
 All simulations were carried out in **Vensim**. 
 
