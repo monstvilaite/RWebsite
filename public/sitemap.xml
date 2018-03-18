@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/2018/02/23/trial/</loc>
+    <lastmod>2018-02-23T21:13:14-05:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/2017/07/23/cryptocurrency-portfolio-value-at-risk/</loc>
     <lastmod>2017-07-23T21:13:14-05:00</lastmod>
   </url>
@@ -29,7 +34,7 @@
   
   <url>
     <loc>/</loc>
-    <lastmod>2017-07-23T21:13:14-05:00</lastmod>
+    <lastmod>2018-02-23T21:13:14-05:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -46,7 +51,7 @@
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2017-07-23T21:13:14-05:00</lastmod>
+    <lastmod>2018-02-23T21:13:14-05:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -72,10 +77,6 @@
     <loc>/tags/</loc>
     <lastmod>2017-07-23T21:13:14-05:00</lastmod>
     <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>/1/01/01/trial/</loc>
   </url>
   
 </urlset>
