@@ -1,0 +1,312 @@
+---
+title: Crypto Portfolio VaR
+author: Monika Monstvilaite
+date: '2018-03-19'
+slug: crypto-portfolio-var
+categories:
+  - R
+tags: []
+---
+
+```{r setup, include=FALSE}
+library(ggplot2)
+library(plyr)
+library(VineCopula)
+library(GGally)
+library(PerformanceAnalytics)
+library(MASS)
+library(rugarch)
+library(reshape2)
+library(fGarch)
+library(rmgarch)
+library(readr)
+library(dplyr)
+library(tidyr)
+library(reshape)
+library(GEVStableGarch)
+library(scatterplot3d)
+library(RColorBrewer)
+library(httr)
+library(jsonlite)
+library(lubridate)
+library(data.table)
+library(XML)
+library(Quandl)
+```
+
+
+```{r Data Set, echo=FALSE, warning=F, message=F, fig.height=3.5, include=F}
+#rm(list = ls(all = TRUE))
+JBCH <- fromJSON("https://min-api.cryptocompare.com/data/histoday?fsym=BCH&tsym=USD&limit=200&e=CCCAGG")
+JBTC <- fromJSON("https://min-api.cryptocompare.com/data/histoday?fsym=BTC&tsym=USD&limit=200&e=Coinbase")
+JETH <- fromJSON("https://min-api.cryptocompare.com/data/histoday?fsym=ETH&tsym=USD&limit=200&e=Coinbase")
+JLTC <- fromJSON("https://min-api.cryptocompare.com/data/histoday?fsym=LTC&tsym=USD&limit=200&e=Coinbase")
+```
+
+```{r, echo=FALSE, message=F, warning=F, figheight=3}
+data <- merge(JBCH$Data[c("time", "close")], JBTC$Data[c("time", "close")], by='time', type='left')
+data <- merge(data, JETH$Data[c("time", "close")], by='time', type='left')
+data <- merge(data, JLTC$Data[c("time", "close")], by='time', type='left')
+
+colnames(data) <- c("Date", "BCH", "BTC", "ETH", "LTC")
+
+data$Date <- as.POSIXct(data$Date, origin="1970-01-01")
+n<- nrow(data)
+
+# Turns 0 values to NA values and removes columns with NA values
+data[data == 0] <- NA
+data<- data[ , apply(data, 2, function(x) !any(is.na(x)))]
+```
+
+# Analysis based on data available at `r data$Date[n]`
+
+Note: data is random, anytrading strategies that 
+
+# Marginal Log-Returns
+
+Here is descriptive analysis of historical returns. See mean, median, min and max value for each cryptocurrency from `r data$Date[1]` to `r data$Date[n]`:
+
+```{r, echo=FALSE, warning=F, message=F, fig.height=3.5}
+# Calculating log return
+returns <- data[-1, ]
+for (i in 2:ncol(data)){
+  returns[,i]<- diff(log(data[,i]), lag=1)
+}
+```
+
+The historical means of the data are the following:
+
+```{r, echo=FALSE, warning=F, message=F}
+round(sapply(returns[,-1], mean), 3)
+```
+
+The historical variance of data is the following:
+
+```{r, echo=FALSE, warning=F, message=F}
+round(sqrt(sapply(returns[,-1], var)), 3)
+```
+
+
+```{r LogReturn plot, echo=FALSE, warning=F, message=F}
+## Testing if there are arch effects in the data
+# library(FinTS)
+# AutocorTest(returns$BCH,lag=1)
+# ArchTest(returns$XRP,lag=1)
+```
+
+
+```{r, echo=FALSE, warning=F, message=F, fig.height=4, fig.width=3.5}
+Monika.plots <- function(data=NULL, Title="Edit Title", limits=c(-0.45, 0.45)){
+  ggplot(data = data, aes(x=value, fill=variable)) +
+  geom_density(aes(colour=variable), cex = 1, adjust=2, alpha=0.01) +
+  theme_bw() + ggtitle(Title) + labs(x=NULL, y=NULL) + xlim(limits) + 
+  theme(panel.border=element_blank(), legend.position = "bottom", legend.title = element_blank()) +
+  scale_color_brewer(type = "seq", palette = "Set1", direction = 1)
+}
+  
+n <- as.integer(ncol(returns)/2)
+
+meltdf1 <- melt(returns, id="Date")
+
+Monika.plots(meltdf1, Title = "Historical returns")
+```
+
+# ARMA-GARCH models fitted
+
+```{r Fitting ARMA-GARCH, echo=FALSE, warning=F, message=F}
+armagarch <- function(i, j, k, l, data){
+  spec <- ugarchspec(variance.model = list(garchOrder = c(k, l)), 
+                   mean.model     = list(armaOrder = c(i, j), include.mean=F),
+                   distribution.model = "std")
+  ugarchfit(spec = spec, data = data)
+}
+
+select <- function(x){
+            gsSelect(x, order.max = c(2, 2, 1, 2),
+                     selection.criteria = c("BIC"), is.aparch = FALSE,
+                     cond.dist = "std", include.mean = F)
+}
+
+BCH <- armagarch(0, 0, 1, 1, data = returns[,"BCH"])
+BTC <- armagarch(0, 0, 1, 1, data = returns[,"BTC"])
+ETH <- armagarch(0, 0, 1, 1, data = returns[,"ETH"])
+LTC <- armagarch(0, 1, 1, 1, data = returns[,"LTC"])
+```
+
+## Standardized error distribution
+
+Should be mean 0, variance 1, no bumps, but cryptos are weird
+
+```{r LogReturn plot 2, echo=FALSE, warning=F, message=F, fig.height=4, fig.width=3.5}
+std_error <- data.frame(Date=returns$Date, BTC=BTC@fit$z, BCH=BCH@fit$z, 
+                        ETH=ETH@fit$z, LTC=LTC@fit$z)
+
+#n <- as.integer(ncol(std_error)/2)
+
+#par(mfrow=c(1,2))
+#meltdf <- melt(std_error[ ,1:n], id="Date")
+#Monika.plots(meltdf, Title = "Noise distribution, part one", c(-5,5))
+#meltdf <- melt(std_error[, c(1,(n+1):ncol(returns))], id="Date")
+#Monika.plots(meltdf, Title = "Noise distribution, part two", c(-5,5))
+```
+
+# Transforming to uniform distribution
+
+Nescessary in order to investigate dependence structure
+
+```{r, echo=FALSE, warning=F, message=F}
+BCH.obs <- psstd(BCH@fit$z, nu= BCH@fit$coef["shape"])
+BTC.obs <- pstd(BTC@fit$z, nu= BTC@fit$coef["shape"])
+ETH.obs <- pstd(ETH@fit$z, nu= ETH@fit$coef["shape"])
+LTC.obs <- pstd(LTC@fit$z, nu= LTC@fit$coef["shape"])
+```
+
+
+# R-Vine copula
+
+Instead of using correlation between variables, we will use r-vine copula. It is done so because correlation is not able to capture the nuances of assets that are correlated in for e.g. left tail of a distribution, but not a right tail. 
+Intuition: cryptocurrencies might all crash at the same time, but when the market is doing well, they are uncorrelated.
+
+Regular vine copula is a method to construct one solution for a simplified pair copula construction such that it would be as close as possible to real multivariate distribution that we aim to model. This way we are also able capture the dependency structure between the variables in an efficient way. 
+
+Kendalls $\tau$ is given by: $\tau = P((X_1-X_2)(Y_1-Y_2) >0)-P((X_1-X_2)(Y_1-Y_2) < 0)$
+
+where $(X_1, Y_1) \sim F$ and $(X_2, Y_2) \sim F$ are independent pairs of random variables. Kendall's $\tau$ is a rank correlation. It does not depend directly on the values and thus is invariant under strictly monotone transformations (cite(Gruber)). On the contrary, linear correlation parameter Pearson's $\rho$ is it not invariant under non-linear strictly increasing transformations, meaning that value of Pearson's $\rho$ depends on marginal distributions. That is why Kendall?s $\tau$ is a more reliable measure in our case.
+
+We plot here the dependence structure. Tree graph below shows the strongest dependencies between cryptocurrencies based on Kendall?s $\tau$.
+
+```{r, echo=FALSE, warning=F, message=F}
+returns.vine <- data.frame(BCH.obs, BTC.obs, ETH.obs, LTC.obs)
+colnames(returns.vine) <- c("BCH", "BTC", "ETH", "LTC")
+#Selects vine tree structure, fits copula and estimates copula parameters
+Matrix.full <- RVineStructureSelect(returns.vine, familyset = NA,
+                                type = 0, selectioncrit = "AIC", 
+                                indeptest = T, level = 0.1)
+
+plot(Matrix.full, type=1, tree = 1, edge.labels = "tau")
+```
+
+Please note below how variables are encoded:
+
+| 1  | 2  | 3  | 4  |
+|----|----|----|----|
+| BCH| BTC| ETH| LTC|
+
+```{r, echo=FALSE, warning=F, message=F}
+#contour(Matrix.full)
+contour(Matrix.full, tree=c(1))
+```
+
+Copulas can help to perceive and visualize the nuances of dependence which is useful when describing the dependence of extreme events. In a figure above we can see that dependence structure can look very different and is not nescessarily symmetrical. Since copulas reveal dependence on a quantile scale, it is especially useful in the context of quantile based risk measures.
+
+# Prediction one day ahead
+
+```{r, echo=FALSE}
+nsim  <- 100000
+simulation1 <- RVineSim(nsim, Matrix.full)
+```
+
+## Backtransforming
+
+```{r, echo=F}
+# # These are standardized residuals
+# #BCH.sim <- qsstd(simulation1[,1], nu= BCH@fit$coef["shape"], xi= BCH@fit$coef["skew"])
+
+backtransform <- function(uGARCHfit, simulation, log_return){
+  
+  coef      <- uGARCHfit@fit$coef
+  residuals <- uGARCHfit@fit$residuals
+  sigma     <- uGARCHfit@fit$sigma
+  t         <- length(uGARCHfit@fit$residuals)
+  
+  if (is.na(coef["skew"])==FALSE){
+    standard_error <- qsstd(simulation, nu= coef["shape"], xi= coef["skew"])
+  } else {
+      standard_error <- qstd(simulation, nu= coef["shape"])
+      }
+
+  if (is.na(coef["omega"])==TRUE){coef["omega"] <- 0}
+  if (is.na(coef["alpha1"])==TRUE){coef["alpha1"] <- 0}
+  if (is.na(coef["alpha2"])==TRUE){coef["alpha2"] <- 0}
+  if (is.na(coef["beta1"])==TRUE){coef["beta1"] <- 0}
+  if (is.na(coef["beta2"])==TRUE){coef["beta2"] <- 0}
+  if (is.na(coef["mu"])==TRUE){coef["mu"] <- 0}
+  if (is.na(coef["ar1"])==TRUE){coef["ar1"] <- 0}
+  if (is.na(coef["ar2"])==TRUE){coef["ar2"] <- 0}
+  if (is.na(coef["ma1"])==TRUE){coef["ma1"] <- 0}
+  if (is.na(coef["ma2"])==TRUE){coef["ma2"] <- 0}
+  
+  VAR <- as.numeric(coef["omega"] + 
+                    coef["alpha1"]*residuals[t]^2 + coef["alpha2"]*residuals[t-1]^2 +
+                    coef["beta1"]*sigma[t]^2 + coef["beta2"]*sigma[t-1]^2)
+  
+  error <- standard_error*sqrt(VAR)
+
+  return_prediction <- coef["mu"] + error + 
+                       coef["ar1"]*log_return[t] + coef["ar2"]*log_return[t-1] +
+                       coef["ma1"]*residuals[t]  + coef["ma2"]*residuals[t-1]
+  return(return_prediction)
+}
+
+BCH.ret.pred <- backtransform(BCH, simulation = simulation1[ ,"BCH"], log_return = returns$BCH)
+BTC.ret.pred <- backtransform(BTC, simulation = simulation1[ ,"BTC"], log_return = returns$BTC)
+ETH.ret.pred <- backtransform(ETH, simulation = simulation1[ ,"ETH"], log_return = returns$ETH)
+LTC.ret.pred <- backtransform(LTC, simulation = simulation1[ ,"LTC"], log_return = returns$LTC)
+```
+
+Calculating variance from GARCH:
+
+$\sigma_{t+1}^2 = \omega + \alpha_1 \epsilon_t^2 + \beta_1 \sigma_t^2$
+
+We use the above equation in order to find error distribution on $T+2$ that will be inserted to ARMA equation.
+
+$\epsilon_{t+1} = \sigma_{t+1} z$
+
+# Prediction of return distribution one day ahead
+
+$r_{t+1} =  \mu + \epsilon_{t+1} + ar_1 r_t + ma_1 \epsilon_t$ 
+
+
+
+```{r, echo=FALSE, message=F, warning=F, figheight=3}
+meltdf <- data.frame(BCH=BCH.ret.pred,BTC=BTC.ret.pred, 
+                     ETH=ETH.ret.pred, LTC=LTC.ret.pred)
+meltdf <- melt(meltdf)
+Monika.plots(meltdf, Title = "Prediction, positive expectation", c(-0.5,0.5))
+round(sapply(meltdf, mean), 4)
+```
+
+# Portfolio. FAT LEFT TAIL
+
+```{r, message=F, echo=F, warning=F}
+meltdf <- data.frame(BCH=BCH.ret.pred, BTC=BTC.ret.pred, ETH=ETH.ret.pred, LTC=LTC.ret.pred)
+
+portfolio <- data.frame(rep(0,100000))
+w <-rep(1/ncol(meltdf), ncol(meltdf))
+for (i in 1:ncol(meltdf)){
+  portfolio <- portfolio + w[i]*meltdf[i]
+}
+colnames(portfolio) <- "Portfolio"
+
+VaR <- sort(portfolio$Portfolio)
+VaR_05 <- VaR[5000]
+mean <- round(mean(portfolio$Portfolio), 4)
+
+ggplot(data = portfolio, aes(x=Portfolio)) +  geom_density() +  theme_bw() + 
+  ggtitle("Portfolio distribution one day ahead") +
+  theme(panel.border=element_blank()) +xlim(c(-0.4, 0.3))  + 
+  geom_vline(aes(xintercept=mean), color="red", linetype="dashed") + 
+  geom_vline(aes(xintercept=VaR_05), color="red", linetype="dashed") + 
+  geom_text(mapping=aes((VaR_05-0.03), -0.15, label = "VaR"), color="red")+
+  geom_text(mapping=aes((mean-0.035), -0.15, label = "Mean"), color="red")
+ 
+VaR_05
+median <- round(median(portfolio$Portfolio), 4)
+median
+```
+
+If investing in all assets equally, expected return is:
+
+```{r, message=F, echo=F, warning=F}
+sapply(portfolio, mean)
+```

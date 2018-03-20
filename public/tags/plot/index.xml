@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Plot on A Hugo website</title>
+    <title>Plot on Monika&#39;s Statistics</title>
     <link>/tags/plot/</link>
-    <description>Recent content in Plot on A Hugo website</description>
+    <description>Recent content in Plot on Monika&#39;s Statistics</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 23 Jul 2017 21:13:14 -0500</lastBuildDate>
+    <lastBuildDate>Fri, 23 Feb 2018 21:13:14 -0500</lastBuildDate>
     
 	<atom:link href="/tags/plot/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Cryptocurrency portfolio Value-at-Risk</title>
-      <link>/2017/07/23/cryptocurrency-portfolio-value-at-risk/</link>
-      <pubDate>Sun, 23 Jul 2017 21:13:14 -0500</pubDate>
+      <title>trial</title>
+      <link>/2018/02/23/trial/</link>
+      <pubDate>Fri, 23 Feb 2018 21:13:14 -0500</pubDate>
       
-      <guid>/2017/07/23/cryptocurrency-portfolio-value-at-risk/</guid>
-      <description>Analysis based on data available at 2018-03-18 01:00:00Note: data is random, anytrading strategies that
-Marginal Log-ReturnsHere is descriptive analysis of historical returns. See mean, median, min and max value for each cryptocurrency from 2017-08-30 02:00:00 to 2018-03-18 01:00:00:
-The historical means of the data are the following:
-## BCH BTC DCR ETC ETH FCT FTC GNO LTC NEO ## 0.002 0.003 0.001 0.000 0.002 -0.002 0.007 -0.004 0.</description>
+      <guid>/2018/02/23/trial/</guid>
+      <description>R MarkdownThis is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
+When you click the Knit button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+summary(cars)## speed dist ## Min.</description>
     </item>
     
     <item>

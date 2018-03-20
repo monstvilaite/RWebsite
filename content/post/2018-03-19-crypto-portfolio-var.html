@@ -1,0 +1,94 @@
+---
+title: Crypto Portfolio VaR
+author: Monika Monstvilaite
+date: '2018-03-19'
+slug: crypto-portfolio-var
+categories:
+  - R
+tags: []
+---
+
+
+
+<div id="analysis-based-on-data-available-at-2018-03-20-010000" class="section level1">
+<h1>Analysis based on data available at 2018-03-20 01:00:00</h1>
+<p>Note: data is random, anytrading strategies that</p>
+</div>
+<div id="marginal-log-returns" class="section level1">
+<h1>Marginal Log-Returns</h1>
+<p>Here is descriptive analysis of historical returns. See mean, median, min and max value for each cryptocurrency from 2017-09-01 02:00:00 to 2018-03-20 01:00:00:</p>
+<p>The historical means of the data are the following:</p>
+<pre><code>##   BCH   BTC   ETH   LTC 
+## 0.003 0.003 0.002 0.003</code></pre>
+<p>The historical variance of data is the following:</p>
+<pre><code>##   BCH   BTC   ETH   LTC 
+## 0.100 0.060 0.063 0.085</code></pre>
+<p><img src="/post/2018-03-19-crypto-portfolio-var_files/figure-html/unnamed-chunk-5-1.png" width="336" /></p>
+</div>
+<div id="arma-garch-models-fitted" class="section level1">
+<h1>ARMA-GARCH models fitted</h1>
+<div id="standardized-error-distribution" class="section level2">
+<h2>Standardized error distribution</h2>
+<p>Should be mean 0, variance 1, no bumps, but cryptos are weird</p>
+</div>
+</div>
+<div id="transforming-to-uniform-distribution" class="section level1">
+<h1>Transforming to uniform distribution</h1>
+<p>Nescessary in order to investigate dependence structure</p>
+</div>
+<div id="r-vine-copula" class="section level1">
+<h1>R-Vine copula</h1>
+<p>Instead of using correlation between variables, we will use r-vine copula. It is done so because correlation is not able to capture the nuances of assets that are correlated in for e.g. left tail of a distribution, but not a right tail. Intuition: cryptocurrencies might all crash at the same time, but when the market is doing well, they are uncorrelated.</p>
+<p>Regular vine copula is a method to construct one solution for a simplified pair copula construction such that it would be as close as possible to real multivariate distribution that we aim to model. This way we are also able capture the dependency structure between the variables in an efficient way.</p>
+<p>Kendalls <span class="math inline">\(\tau\)</span> is given by: <span class="math inline">\(\tau = P((X_1-X_2)(Y_1-Y_2) &gt;0)-P((X_1-X_2)(Y_1-Y_2) &lt; 0)\)</span></p>
+<p>where <span class="math inline">\((X_1, Y_1) \sim F\)</span> and <span class="math inline">\((X_2, Y_2) \sim F\)</span> are independent pairs of random variables. Kendall’s <span class="math inline">\(\tau\)</span> is a rank correlation. It does not depend directly on the values and thus is invariant under strictly monotone transformations (cite(Gruber)). On the contrary, linear correlation parameter Pearson’s <span class="math inline">\(\rho\)</span> is it not invariant under non-linear strictly increasing transformations, meaning that value of Pearson’s <span class="math inline">\(\rho\)</span> depends on marginal distributions. That is why Kendall?s <span class="math inline">\(\tau\)</span> is a more reliable measure in our case.</p>
+<p>We plot here the dependence structure. Tree graph below shows the strongest dependencies between cryptocurrencies based on Kendall?s <span class="math inline">\(\tau\)</span>.</p>
+<p><img src="/post/2018-03-19-crypto-portfolio-var_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Please note below how variables are encoded:</p>
+<table>
+<thead>
+<tr class="header">
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>BCH</td>
+<td>BTC</td>
+<td>ETH</td>
+<td>LTC</td>
+</tr>
+</tbody>
+</table>
+<p><img src="/post/2018-03-19-crypto-portfolio-var_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>Copulas can help to perceive and visualize the nuances of dependence which is useful when describing the dependence of extreme events. In a figure above we can see that dependence structure can look very different and is not nescessarily symmetrical. Since copulas reveal dependence on a quantile scale, it is especially useful in the context of quantile based risk measures.</p>
+</div>
+<div id="prediction-one-day-ahead" class="section level1">
+<h1>Prediction one day ahead</h1>
+<div id="backtransforming" class="section level2">
+<h2>Backtransforming</h2>
+<p>Calculating variance from GARCH:</p>
+<p><span class="math inline">\(\sigma_{t+1}^2 = \omega + \alpha_1 \epsilon_t^2 + \beta_1 \sigma_t^2\)</span></p>
+<p>We use the above equation in order to find error distribution on <span class="math inline">\(T+2\)</span> that will be inserted to ARMA equation.</p>
+<p><span class="math inline">\(\epsilon_{t+1} = \sigma_{t+1} z\)</span></p>
+</div>
+</div>
+<div id="prediction-of-return-distribution-one-day-ahead" class="section level1">
+<h1>Prediction of return distribution one day ahead</h1>
+<p><span class="math inline">\(r_{t+1} = \mu + \epsilon_{t+1} + ar_1 r_t + ma_1 \epsilon_t\)</span></p>
+<p><img src="/post/2018-03-19-crypto-portfolio-var_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<pre><code>## variable    value 
+##       NA  -0.0019</code></pre>
+</div>
+<div id="portfolio.-fat-left-tail" class="section level1">
+<h1>Portfolio. FAT LEFT TAIL</h1>
+<p><img src="/post/2018-03-19-crypto-portfolio-var_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<pre><code>## [1] -0.09271836</code></pre>
+<pre><code>## [1] 0.0013</code></pre>
+<p>If investing in all assets equally, expected return is:</p>
+<pre><code>##    Portfolio 
+## -0.001861169</code></pre>
+</div>
