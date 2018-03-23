@@ -155,7 +155,7 @@ std_error <- data.frame(Date=returns$Date, BTC=BTC@fit$z, BCH=BCH@fit$z,
 Nescessary in order to investigate dependence structure
 
 ```{r, echo=FALSE, warning=F, message=F}
-BCH.obs <- psstd(BCH@fit$z, nu= BCH@fit$coef["shape"])
+BCH.obs <- pstd(BCH@fit$z, nu= BCH@fit$coef["shape"])
 BTC.obs <- pstd(BTC@fit$z, nu= BTC@fit$coef["shape"])
 ETH.obs <- pstd(ETH@fit$z, nu= ETH@fit$coef["shape"])
 LTC.obs <- pstd(LTC@fit$z, nu= LTC@fit$coef["shape"])
@@ -171,9 +171,9 @@ Regular vine copula is a method to construct one solution for a simplified pair 
 
 Kendalls $\tau$ is given by: $\tau = P((X_1-X_2)(Y_1-Y_2) >0)-P((X_1-X_2)(Y_1-Y_2) < 0)$
 
-where $(X_1, Y_1) \sim F$ and $(X_2, Y_2) \sim F$ are independent pairs of random variables. Kendall's $\tau$ is a rank correlation. It does not depend directly on the values and thus is invariant under strictly monotone transformations (cite(Gruber)). On the contrary, linear correlation parameter Pearson's $\rho$ is it not invariant under non-linear strictly increasing transformations, meaning that value of Pearson's $\rho$ depends on marginal distributions. That is why Kendall?s $\tau$ is a more reliable measure in our case.
+where $(X_1, Y_1) \sim F$ and $(X_2, Y_2) \sim F$ are independent pairs of random variables. Kendall's $\tau$ is a rank correlation. It does not depend directly on the values and thus is invariant under strictly monotone transformations (cite(Gruber)). On the contrary, linear correlation parameter Pearson's $\rho$ is it not invariant under non-linear strictly increasing transformations, meaning that value of Pearson's $\rho$ depends on marginal distributions. That is why Kendall's $\tau$ is a more reliable measure in our case.
 
-We plot here the dependence structure. Tree graph below shows the strongest dependencies between cryptocurrencies based on Kendall?s $\tau$.
+We plot here the dependence structure. Tree graph below shows the strongest dependencies between cryptocurrencies based on Kendall's $\tau$.
 
 ```{r, echo=FALSE, warning=F, message=F}
 returns.vine <- data.frame(BCH.obs, BTC.obs, ETH.obs, LTC.obs)
